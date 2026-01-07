@@ -20,6 +20,16 @@
     document.addEventListener('click', function(e) {
         var target = e.target;
         if (!target) return;
+        if (target.closest) {
+            var langToggle = target.closest('#lang-toggle');
+            if (langToggle) {
+                e.preventDefault();
+                var currentLang = body.classList.contains('lang-en') ? 'en' : 'zh';
+                var nextLang = currentLang === 'en' ? 'zh' : 'en';
+                applyLang(nextLang, true);
+                return;
+            }
+        }
         if (target.classList && target.classList.contains('lang-select')) {
             e.preventDefault();
             var lang = target.getAttribute('data-lang');
