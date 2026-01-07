@@ -1,0 +1,7 @@
+/* Language Toggle Support */
+body.lang-zh .lang-en {
+    display: none !important;
+}
+body.lang-en .lang-zh {
+    display: none !important;
+}
