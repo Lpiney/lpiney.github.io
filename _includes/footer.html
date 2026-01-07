@@ -192,7 +192,7 @@
 
         // init
         var P = $(_containerSelector), a, n, t, l, i, c;
-        a = P.find('h1,h2,h3,h4,h5,h6');
+        a = P.find('h1,h2,h3,h4,h5,h6').filter(':visible');
 
         // clean
         $(selector).html('')
@@ -211,17 +211,10 @@
 
     generateCatalog(".catalog-body");
 
-    // toggle side catalog
-    $(".catalog-toggle").click((function (e) {
-        e.preventDefault();
-        $('.side-catalog').toggleClass("fold")
-    }))
-
-    /*
-     * Doc: https://github.com/davist11/jQuery-One-Page-Nav
-     * Fork by Hux to support padding
-     */
-    async("{{ '/js/jquery.nav.js' | prepend: site.baseurl }}", function () {
+    function initCatalogNav() {
+        if (!($.fn && $.fn.onePageNav)) return;
+        $(window).off('scroll.onePageNav resize.onePageNav');
+        $('.catalog-body').off('click.onePageNav');
         $('.catalog-body').onePageNav({
             currentClass: "active",
             changeHash: !1,
@@ -235,6 +228,25 @@
             scrollChange: null,
             padding: 80
         });
+    }
+
+    // toggle side catalog
+    $(".catalog-toggle").click((function (e) {
+        e.preventDefault();
+        $('.side-catalog').toggleClass("fold")
+    }))
+
+    /*
+     * Doc: https://github.com/davist11/jQuery-One-Page-Nav
+     * Fork by Hux to support padding
+     */
+    async("{{ '/js/jquery.nav.js' | prepend: site.baseurl }}", function () {
+        initCatalogNav();
+    });
+
+    document.addEventListener('lpiney:language-change', function () {
+        generateCatalog(".catalog-body");
+        initCatalogNav();
     });
 </script>
 
@@ -376,7 +388,14 @@
         var todayMinute = today.getMinutes();
         var todaySecond = today.getSeconds();
         /* Date.UTC() -- refer to site start date */
-        var t1 = Date.UTC({{ site.start_date | date: "%Y" }}, {{ site.start_date | date: "%m" | minus: 1 }}, {{ site.start_date | date: "%d" }}, 0, 0, 0);
+        var t1 = Date.UTC(
+            parseInt('{{ site.start_date | date: "%Y" }}', 10),
+            parseInt('{{ site.start_date | date: "%m" | minus: 1 }}', 10),
+            parseInt('{{ site.start_date | date: "%d" }}', 10),
+            0,
+            0,
+            0
+        );
         var t2 = Date.UTC(todayYear, todayMonth - 1, todayDate, todayHour, todayMinute, todaySecond);
         var diff = t2 - t1;
         var diffDays = Math.floor(diff / days);
