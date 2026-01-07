@@ -26,14 +26,25 @@ body.lang-en .lang-zh {
 }
 
 /* Dark Mode Toggle Switch (P3-like) */
-.navbar-dark-toggle {
-    padding-top: 12px;
-    padding-bottom: 12px;
+.navbar-dark-toggle #dark-mode-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding-top: 20px;
+    padding-bottom: 20px;
 }
 
-.navbar-dark-toggle #dark-mode-toggle {
-    padding-top: 0;
-    padding-bottom: 0;
+.nav-label {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: inherit;
+}
+
+.navbar-custom .nav .dropdown-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
 }
 
 .dark-toggle-switch {
