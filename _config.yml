@@ -59,6 +59,16 @@ kramdown:
 # Disqus settings
 disqus_username: false
 
+# Valine settings
+valine_comment: true
+valine_appId: # your leancloud appId
+valine_appKey: # your leancloud appKey
+valine_placeholder: "快来评论吧~ (支持 Markdown)"
+
+# Busuanzi settings
+busuanzi: true
+start_date: "2026-01-01" # 博客启动时间
+
 # Netease settings
 netease_comment: false
 

@@ -9,7 +9,19 @@
                 <p class="copyright text-muted">
                     Copyright &copy; {{ site.title }} {{ site.time | date: '%Y' }}
                     <br>
-                    Powered by <a href="https://jekyllrb.com/" rel="noopener">Jekyll</a>
+                    Powered by <a href="https://jekyllrb.com/" rel="noopener">Jekyll</a> |
+                    <iframe style="margin-left: 2px; margin-bottom:-5px;" frameborder="0" scrolling="0" width="100px" height="20px" src="https://ghbtns.com/github-btn.html?user={{ site.github_username }}&repo={{ site.github_username }}.github.io&type=star&count=true"></iframe>
+                    <br>
+                    {% if site.busuanzi %}
+                    <span id="busuanzi_container_site_pv" style="display:none">
+                        本站总访问量 <span id="busuanzi_value_site_pv"></span> 次
+                    </span>
+                    <span id="busuanzi_container_site_uv" style="display:none">
+                        | 访客数 <span id="busuanzi_value_site_uv"></span> 人
+                    </span>
+                    <br>
+                    {% endif %}
+                    <span id="sitetime"></span>
                 </p>
             </div>
         </div>
@@ -222,6 +234,7 @@
         });
     });
 </script>
+
 {% endunless %}
 
 
@@ -336,4 +349,35 @@
             }
         });
     });
+</script>
+
+{% if site.busuanzi %}
+<!-- Busuanzi -->
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+{% endif %}
+
+<!-- Site Time -->
+<script>
+    function siteTime() {
+        window.setTimeout("siteTime()", 1000);
+        var seconds = 1000;
+        var minutes = seconds * 60;
+        var hours = minutes * 60;
+        var days = hours * 24;
+        var years = days * 365;
+        var today = new Date();
+        var todayYear = today.getFullYear();
+        var todayMonth = today.getMonth() + 1;
+        var todayDate = today.getDate();
+        var todayHour = today.getHours();
+        var todayMinute = today.getMinutes();
+        var todaySecond = today.getSeconds();
+        /* Date.UTC() -- refer to site start date */
+        var t1 = Date.UTC({{ site.start_date | date: "%Y" }}, {{ site.start_date | date: "%m" | minus: 1 }}, {{ site.start_date | date: "%d" }}, 0, 0, 0);
+        var t2 = Date.UTC(todayYear, todayMonth - 1, todayDate, todayHour, todayMinute, todaySecond);
+        var diff = t2 - t1;
+        var diffDays = Math.floor(diff / days);
+        document.getElementById("sitetime").innerHTML = "已运行 " + diffDays + " 天";
+    }
+    siteTime();
 </script>

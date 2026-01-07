@@ -1,0 +1,12 @@
+---
+layout: page
+title: "留言板"
+description: "欢迎留言交流~"
+header-img: "img/home-bg.jpg"
+---
+
+{% if site.valine_comment %}
+<!-- Valine 评论框 start -->
+{% include valine.html %}
+<!-- Valine 评论框 end -->
+{% endif %}
