@@ -178,6 +178,15 @@
     bottom: -100px;
   }
 }
+
+.github-star-frame {
+  margin-left: 2px;
+  margin-bottom: -5px;
+}
+
+.busuanzi-hidden {
+  display: none;
+}
 @media (max-width: 640px) {
   .paper-snackbar {
     /*
@@ -213,6 +222,7 @@
   margin: 1em;
   width: 160px;
   overflow: hidden;
+  -webkit-user-select: none;
   user-select: none;
   color: #000000;
   text-transform: uppercase;
