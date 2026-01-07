@@ -1,8 +1,10 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-    <meta name="description" content="{{ site.description }}">
-    <meta name="keywords" content="{{ site.keyword }}">
+    {% assign seo_description = page.description | default: page.excerpt | default: site.description %}
+    {% assign seo_keywords = page.keywords | default: site.keyword %}
+    <meta name="description" content="{{ seo_description | strip_html | strip_newlines | truncate: 160 }}">
+    <meta name="keywords" content="{{ seo_keywords }}">
     <meta name="theme-color" content="{{ site.chrome-tab-theme-color }}">
 
     <title>{% if page.title %}{{ page.title }} - {{ site.SEOTitle }}{% else %}{{ site.SEOTitle }}{% endif %}</title>
@@ -16,13 +18,14 @@
 
     <!-- Canonical URL -->
     <link rel="canonical" href="{{ page.url | replace:'index.html','' | prepend: site.baseurl | prepend: site.url }}">
+    <link rel="alternate" type="application/rss+xml" title="{{ site.title | xml_escape }}" href="{{ "/feed.xml" | prepend: site.baseurl | prepend: site.url }}">
 
     <!-- Open Graph -->
     <meta property="og:title" content="{% if page.title %}{{ page.title }} - {{ site.SEOTitle }}{% else %}{{ site.SEOTitle }}{% endif %}">
     {% case page.layout %}
     {% when 'post' %}
     <meta property="og:type" content="article">
-    <meta property="og:description" content="{{ page.excerpt | strip_html | truncate:200 }}">
+    <meta property="og:description" content="{{ seo_description | strip_html | strip_newlines | truncate: 200 }}">
     {% if page.date %}
     <meta property="article:published_time" content="{{ page.date | date: '%Y-%m-%dT%H:%M:%SZ' }}">
     {% endif %}
@@ -34,11 +37,54 @@
     {% endfor %}
     {% else %}
     <meta property="og:type" content="website">
-    <meta property="og:description" content="{% if page.description %}{{ page.description }}{% else %}{{ site.description }}{% endif %}">
+    <meta property="og:description" content="{{ seo_description | strip_html | strip_newlines | truncate: 200 }}">
     {% endcase %}
-    <meta property="og:image" content="{{ site.url }}{{ site.sidebar-avatar }}">
+    {% assign seo_image_path = page.header-img | default: site.header-img %}
+    {% if seo_image_path contains '://' %}
+        {% assign seo_image_url = seo_image_path %}
+    {% elsif seo_image_path %}
+        {% assign seo_image_first_char = seo_image_path | slice: 0, 1 %}
+        {% if seo_image_first_char == '/' %}
+            {% assign seo_image_url = seo_image_path | prepend: site.baseurl | prepend: site.url %}
+        {% else %}
+            {% assign seo_image_url = '/' | append: seo_image_path | prepend: site.baseurl | prepend: site.url %}
+        {% endif %}
+    {% else %}
+        {% assign seo_image_url = site.url | append: site.sidebar-avatar %}
+    {% endif %}
+    <meta property="og:image" content="{{ seo_image_url }}">
     <meta property="og:url" content="{{ site.url }}{{ page.url }}">
     <meta property="og:site_name" content="{{ site.SEOTitle }}">
+
+    {% if page.layout == 'post' %}
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "headline": {{ page.title | default: site.SEOTitle | jsonify }},
+        "description": {{ seo_description | strip_html | strip_newlines | truncate: 200 | jsonify }},
+        "datePublished": {{ page.date | date_to_xmlschema | jsonify }},
+        "dateModified": {{ page.last_modified_at | default: page.date | date_to_xmlschema | jsonify }},
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": {{ page.url | replace:'index.html','' | prepend: site.baseurl | prepend: site.url | jsonify }}
+        },
+        "image": {{ seo_image_url | jsonify }},
+        "author": {
+            "@type": "Person",
+            "name": {{ page.author | default: site.title | jsonify }}
+        },
+        "publisher": {
+            "@type": "Organization",
+            "name": {{ site.title | jsonify }},
+            "logo": {
+                "@type": "ImageObject",
+                "url": {{ site.sidebar-avatar | jsonify }}
+            }
+        }
+    }
+    </script>
+    {% endif %}
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="{{ "/css/bootstrap.min.css" | prepend: site.baseurl }}">

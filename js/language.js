@@ -1,6 +1,7 @@
 (function() {
     var userLang = localStorage.getItem('user-lang');
     var body = document.body;
+    var html = document.documentElement;
 
     if (!userLang) {
         var sysLang = navigator.language || navigator.userLanguage;
@@ -11,6 +12,7 @@
         body.classList.remove('lang-zh');
         body.classList.remove('lang-en');
         body.classList.add('lang-' + lang);
+        if (html) html.setAttribute('lang', lang === 'zh' ? 'zh-CN' : 'en');
         if (persist) localStorage.setItem('user-lang', lang);
         document.dispatchEvent(new CustomEvent('lpiney:language-change', { detail: { lang: lang } }));
     }

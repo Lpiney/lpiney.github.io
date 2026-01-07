@@ -7,6 +7,7 @@ description: "Bruce 的个人博客，记录 EE 学习、机器人和独立游�
 keyword: "Bruce, EE, Electronics, Robot, Indie Game, Blog"
 url: "https://lpiney.github.io" # your host, for absolute URL
 baseurl: "" # for example, '/blog' if your blog hosted on 'host/blog'
+lang: "zh-CN"
 
 # Publish posts or collection documents with a future date.
 future: true
@@ -40,7 +41,7 @@ anchorjs: true # if you want to customize anchor. check out line:181 of `post.ht
 # from PR#40, to support local preview for Jekyll 3.0
 # make sure you have this gem installed
 # `$ gem install jekyll-paginate`
-plugins: [jekyll-paginate]
+plugins: [jekyll-paginate, jekyll-sitemap]
 
 # Markdown settings
 # replace redcarpet to kramdown,
