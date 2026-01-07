@@ -61,9 +61,10 @@ disqus_username: false
 
 # Valine settings
 valine_comment: true
-valine_appId: # your leancloud appId
-valine_appKey: # your leancloud appKey
+valine_appId: 0VgTwoy6FtL8y9N98LUnniJRiD5wEYosE9S9hcWR9yB51FwjlVdz1iceCGjMHd6C-us-w1
+valine_appKey: 0VgTwoy6FtL8y9N98LUnniJRiD5wEYosE9S9hcWR9yB51FwjlVdz1iceCGjMHd6C-us-w1
 valine_placeholder: "快来评论吧~ (支持 Markdown)"
+# valine_serverURLs: "https://xxx.api.lncldglobal.com" # 国际版可能需要配置 REST API 服务器地址
 
 # Busuanzi settings
 busuanzi: true

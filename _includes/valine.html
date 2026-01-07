@@ -9,6 +9,10 @@
         appId: '{{ site.valine_appId }}',
         appKey: '{{ site.valine_appKey }}',
         placeholder: '{{ site.valine_placeholder }}',
+        {% if site.valine_serverURLs %}
+        serverURLs: '{{ site.valine_serverURLs }}',
+        {% endif %}
+        enableQQ: true,
         avatar: 'mp', 
         visitor: true 
     });
