@@ -1,0 +1,116 @@
+/* Dark Mode Styles */
+body.dark-mode {
+    background-color: #1a1a1a;
+    color: #c0c0c0;
+}
+
+/* Navbar */
+body.dark-mode .navbar-custom {
+    background-color: rgba(26, 26, 26, 0.9);
+    border-bottom: 1px solid #333;
+}
+
+/* Invert navbar text color override */
+body.dark-mode .navbar-custom .nav li a {
+    color: #ddd;
+}
+body.dark-mode .navbar-custom .nav li a:hover {
+    color: #0085a1;
+}
+
+/* Post Content */
+body.dark-mode .post-container {
+    color: #bfbfbf;
+}
+
+body.dark-mode h1,
+body.dark-mode h2,
+body.dark-mode h3,
+body.dark-mode h4,
+body.dark-mode h5,
+body.dark-mode h6 {
+    color: #e0e0e0;
+}
+
+body.dark-mode hr {
+    border-top: 1px solid #444;
+}
+
+/* Links */
+body.dark-mode a {
+    color: #4db5cc; /* Lighter shade of primary brand color */
+}
+
+body.dark-mode a:hover,
+body.dark-mode a:focus {
+    color: #0085a1;
+}
+
+/* Blockquotes */
+body.dark-mode blockquote {
+    color: #999;
+    border-left-color: #444;
+}
+
+/* Sidebar */
+body.dark-mode .sidebar-container {
+    color: #bfbfbf;
+}
+body.dark-mode .sidebar-container h5 {
+    color: #ccc;
+    border-bottom: 1px solid #444;
+}
+
+/* Tags */
+body.dark-mode .tags a {
+    border-color: #444;
+    color: #aaa;
+    background-color: #2b2b2b;
+}
+
+body.dark-mode .tags a:hover {
+    background-color: #0085a1;
+    color: #fff;
+    border-color: #0085a1;
+}
+
+/* Pager (Next/Prev buttons) */
+body.dark-mode .pager li > a, 
+body.dark-mode .pager li > span {
+    background-color: #2b2b2b;
+    border: 1px solid #444;
+    color: #ddd;
+}
+body.dark-mode .pager li > a:hover,
+body.dark-mode .pager li > a:focus {
+    background-color: #0085a1;
+    color: #fff;
+    border: 1px solid #0085a1;
+}
+
+/* Tables */
+body.dark-mode table {
+    background-color: #2b2b2b;
+    color: #ddd;
+}
+body.dark-mode table th,
+body.dark-mode table td {
+    border: 1px solid #444;
+}
+
+/* Code blocks */
+body.dark-mode pre {
+    background-color: #2b2b2b;
+    border: 1px solid #444;
+    color: #eee;
+}
+body.dark-mode code {
+    background-color: #333;
+    color: #e6e6e6;
+}
+
+/* Footer */
+body.dark-mode footer {
+    background-color: #1a1a1a;
+    color: #888;
+}
