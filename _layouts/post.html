@@ -62,10 +62,9 @@ layout: default
                 <!-- 网易云跟帖 评论框 end -->
                 {% endif %}
 
-                {% if site.valine_comment %}
-                <!-- Valine 评论框 start -->
-                {% include valine.html %}
-                <!-- Valine 评论框 end -->
+                {% if site.giscus.enable %}
+                <!-- Giscus Comment -->
+                {% include giscus.html %}
                 {% endif %}
             </div>  
 

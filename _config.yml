@@ -59,16 +59,24 @@ kramdown:
 # Disqus settings
 disqus_username: false
 
-# Valine settings
-valine_comment: true
-valine_appId: 0VgTwoy6FtL8y9N98LUnniJRiD5wEYosE9S9hcWR9yB51FwjlVdz1iceCGjMHd6C-us-w1
-valine_appKey: 0VgTwoy6FtL8y9N98LUnniJRiD5wEYosE9S9hcWR9yB51FwjlVdz1iceCGjMHd6C-us-w1
-valine_placeholder: "快来评论吧~ (支持 Markdown)"
-# valine_serverURLs: "https://xxx.api.lncldglobal.com" # 国际版可能需要配置 REST API 服务器地址
+# Giscus settings
+giscus:
+  enable: true
+  repo: "lpiney/lpiney.github.io" # 你的仓库名 (假设是这个，请确认)
+  repo_id: "R_kgDOL9hD8w" # 请在 giscus 官网获取并填入
+  category: "Announcements"
+  category_id: "DIC_kwDOL9hD884C0qni" # 请在 giscus 官网获取并填入
+  mapping: "pathname"
+  strict: "0"
+  reactions_enabled: "1"
+  emit_metadata: "0"
+  input_position: "bottom"
+  theme: "preferred_color_scheme"
+  lang: "zh-CN"
 
 # Busuanzi settings
 busuanzi: true
-start_date: "2026-01-01" # 博客启动时间
+start_date: "2024-05-19" # 博客启动时间
 
 # Netease settings
 netease_comment: false

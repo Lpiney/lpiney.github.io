@@ -5,8 +5,7 @@ description: "欢迎留言交流~"
 header-img: "img/home-bg.jpg"
 ---
 
-{% if site.valine_comment %}
-<!-- Valine 评论框 start -->
-{% include valine.html %}
-<!-- Valine 评论框 end -->
+{% if site.giscus.enable %}
+<!-- Giscus Comment -->
+{% include giscus.html %}
 {% endif %}
