@@ -4,6 +4,26 @@ body.dark-mode {
     color: #c0c0c0;
 }
 
+.navbar-custom .navbar-brand {
+    display: inline-flex;
+    align-items: center;
+}
+
+.navbar-custom .navbar-brand .site-logo {
+    width: 18px;
+    height: 18px;
+    border-radius: 4px;
+    margin-right: 8px;
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.65);
+    display: block;
+    object-fit: contain;
+}
+
+.navbar-custom.invert .navbar-brand .site-logo,
+.navbar-custom.is-fixed .navbar-brand .site-logo {
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.22);
+}
+
 /* Navbar */
 body.dark-mode .navbar-custom {
     background-color: rgba(26, 26, 26, 0.9);
