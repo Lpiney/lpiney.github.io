@@ -18,13 +18,18 @@ const PRECACHE_LIST = [
   "./js/jquery.min.js",
   "./js/bootstrap.min.js",
   "./js/hux-blog.min.js",
+  "./js/simple-jekyll-search.min.js",
+  "./js/dark-mode.js",
+  "./js/language.js",
   "./js/snackbar.js",
   "./img/icon_wechat.png",
   "./img/avatar-hux.jpg",
   "./img/home-bg.jpg",
   "./img/404-bg.jpg",
-  "./css/hux-blog.min.css",
-  "./css/bootstrap.min.css"
+  "./css/bootstrap.min.css",
+  "./css/bruce-blog.min.css",
+  "./css/dark-mode.css",
+  "./css/language.css"
   // "//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css",
   // "//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/fonts/fontawesome-webfont.woff2?v=4.6.3",
   // "//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js"
@@ -40,8 +45,8 @@ const DEPRECATED_CACHES = ['precache-v1', 'runtime', 'main-precache-v1', 'main-r
 
 // The Util Function to hack URLs of intercepted requests
 const getCacheBustingUrl = (req) => {
-  var now = Date.now();
-  url = new URL(req.url)
+  const now = Date.now();
+  const url = new URL(req.url)
 
   // 1. fixed http URL
   // Just keep syncing with location.protocol
@@ -85,7 +90,7 @@ const shouldRedirect = (req) => (isNavigationReq(req) && new URL(req.url).pathna
 // `${url}/` would mis-add "/" in the end of query, so we use URL object.
 // P.P.S. Always trust url.pathname instead of the whole url string.
 const getRedirectUrl = (req) => {
-  url = new URL(req.url)
+  const url = new URL(req.url)
   url.pathname += "/"
   return url.href
 }
@@ -103,7 +108,7 @@ self.addEventListener('install', e => {
   e.waitUntil(
     caches.open(CACHE).then(cache => {
       return cache.addAll(PRECACHE_LIST)
-        .then(self.skipWaiting())
+        .then(() => self.skipWaiting())
         .catch(err => console.log(err))
     })
   )
