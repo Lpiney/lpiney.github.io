@@ -1,17 +1,17 @@
 /* ===========================================================
- * sw.js
+ * sw.js - Service Worker（PWA 离线功能核心）
  * ===========================================================
  * Copyright 2016 @huxpro
  * Licensed under Apache 2.0
  * service worker scripting
  * ========================================================== */
 
-// CACHE_NAMESPACE
-// CacheStorage is shared between all sites under same domain.
-// A namespace can prevent potential name conflicts and mis-deletion.
+// 缓存命名空间（防止同一域名下不同网站的缓存冲突）
 const CACHE_NAMESPACE = 'main-'
 
+// 当前使用的缓存名称
 const CACHE = CACHE_NAMESPACE + 'precache-then-runtime';
+// 预缓存列表：这些文件会在 Service Worker 安装时就下载好
 const PRECACHE_LIST = [
   "./",
   "./offline.html",
@@ -29,42 +29,30 @@ const PRECACHE_LIST = [
   "./css/bruce-blog.min.css",
   "./css/dark-mode.css",
   "./css/language.css"
-  // "//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css",
-  // "//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/fonts/fontawesome-webfont.woff2?v=4.6.3",
-  // "//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js"
 ]
 const HOSTNAME_WHITELIST = [
   self.location.hostname,
   "cdnjs.cloudflare.com",
   "giscus.app"
 ]
+// 旧版本的缓存名称（用于清理）
 const DEPRECATED_CACHES = ['precache-v1', 'runtime', 'main-precache-v1', 'main-runtime']
 
 
-// The Util Function to hack URLs of intercepted requests
+// 给 URL 添加随机参数，强制从网络获取最新内容（绕过浏览器缓存）
 const getCacheBustingUrl = (req) => {
   const now = Date.now();
   const url = new URL(req.url)
 
-  // 1. fixed http URL
-  // Just keep syncing with location.protocol
-  // fetch(httpURL) belongs to active mixed content.
-  // And fetch(httpRequest) is not supported yet.
+  // 统一使用和当前页面一样的协议（http 或 https）
   url.protocol = self.location.protocol
 
-  // 2. add query for caching-busting.
-  // Github Pages served with Cache-Control: max-age=600
-  // max-age on mutable content is error-prone, with SW life of bugs can even extend.
-  // Until cache mode of Fetch API landed, we have to workaround cache-busting with query string.
-  // Cache-Control-Bug: https://bugs.chromium.org/p/chromium/issues/detail?id=453190
+  // 添加 cache-bust 参数，强制获取最新内容
   url.search += (url.search ? '&' : '?') + 'cache-bust=' + now;
   return url.href
 }
 
-// The Util Function to detect and polyfill req.mode="navigate"
-// request.mode of 'navigate' is unfortunately not supported in Chrome
-// versions older than 49, so we need to include a less precise fallback,
-// which checks for a GET request with an Accept: text/html header.
+// 判断是不是页面导航请求（而不是图片/JS/CSS 等资源请求）
 const isNavigationReq = (req) => (req.mode === 'navigate' || (req.method === 'GET' && req.headers && req.headers.get('accept') && req.headers.get('accept').includes('text/html')))
 
 // The Util Function to detect if a req is end with extension
