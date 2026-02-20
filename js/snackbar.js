@@ -7,62 +7,77 @@
 
 
 var createSnackbar = (function() {
-  // Any snackbar that is already shown
   var previous = null;
   
-/*
-<div class="paper-snackbar">
-  <button class="action">Dismiss</button>
-  This is a longer message that won't fit on one line. It is, inevitably, quite a boring thing. Hopefully it is still useful.
-</div>
-*/
-  
   return function(config) {
-    var message = config.message,
-      actionText = config.actionText,
-      action = config.action,
-      duration = config.duration;
+    var message = config.message || '';
+    var actionText = config.actionText;
+    var action = config.action;
+    var duration = config.duration;
 
     if (previous) {
-      previous.dismiss();
+      previous.dismiss(true);
     }
+    
     var snackbar = document.createElement('div');
     snackbar.className = 'paper-snackbar';
-    snackbar.dismiss = function() {
-      this.style.opacity = 0;
+    
+    var timeoutId = null;
+    
+    snackbar.dismiss = function(immediate) {
+      var self = this;
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+        timeoutId = null;
+      }
+      if (immediate) {
+        removeSnackbar(self);
+      } else {
+        self.style.opacity = 0;
+      }
     };
+    
     var text = document.createTextNode(message);
     snackbar.appendChild(text);
+    
+    var actionButton;
     if (actionText) {
       if (!action) {
-        action = snackbar.dismiss.bind(snackbar);
+        action = snackbar.dismiss.bind(snackbar, false);
       }
-      var actionButton = document.createElement('button');
+      actionButton = document.createElement('button');
       actionButton.className = 'action';
-      actionButton.innerHTML = actionText;
+      actionButton.textContent = actionText;
       actionButton.addEventListener('click', action);
       snackbar.appendChild(actionButton);
     }
-    setTimeout(function() {
-      if (previous === this) {
-        previous.dismiss();
-      }
-    }.bind(snackbar), duration || 5000);
     
-    snackbar.addEventListener('transitionend', function(event, elapsed) {
-      if (event.propertyName === 'opacity' && this.style.opacity == 0) {
-        this.parentElement.removeChild(this);
-        if (previous === this) {
+    function removeSnackbar(element) {
+      if (element && element.parentElement) {
+        element.parentElement.removeChild(element);
+        if (previous === element) {
           previous = null;
         }
       }
-    }.bind(snackbar));
-
-
+    }
     
+    var transitionHandler = function(event) {
+      if (event.propertyName === 'opacity' && this.style.opacity == 0) {
+        removeSnackbar(this);
+      }
+    }.bind(snackbar);
+    
+    snackbar.addEventListener('transitionend', transitionHandler);
+    
+    timeoutId = setTimeout(function() {
+      if (previous === this) {
+        this.dismiss(false);
+      }
+    }.bind(snackbar), duration || 5000);
+
     previous = snackbar;
     document.body.appendChild(snackbar);
-    // In order for the animations to trigger, I have to force the original style to be computed, and then change it.
+    
     getComputedStyle(snackbar).bottom;
     snackbar.style.bottom = '0px';
     snackbar.style.opacity = 1;

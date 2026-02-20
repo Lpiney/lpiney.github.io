@@ -5,15 +5,19 @@
   "icons": [{
     "src": "icons/128.png",
     "sizes": "128x128",
-    "type": "image/png"
+    "type": "image/png",
+    "purpose": "any maskable"
   }, {
     "src": "icons/512.png",
     "sizes": "512x512",
-    "type": "image/png"
+    "type": "image/png",
+    "purpose": "any maskable"
   }],
-  "background_color": "#fff",
-  "theme_color": "#000",
+  "background_color": "#ffffff",
+  "theme_color": "#000000",
   "start_url": "/",
   "display": "standalone",
-  "orientation": "portrait"
+  "orientation": "any",
+  "scope": "/",
+  "lang": "zh-CN"
 }

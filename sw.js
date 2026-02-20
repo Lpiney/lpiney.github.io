@@ -23,7 +23,6 @@ const PRECACHE_LIST = [
   "./js/language.js",
   "./js/snackbar.js",
   "./img/icon_wechat.png",
-  "./img/avatar-hux.jpg",
   "./img/home-bg.jpg",
   "./img/404-bg.jpg",
   "./css/bootstrap.min.css",
@@ -36,9 +35,8 @@ const PRECACHE_LIST = [
 ]
 const HOSTNAME_WHITELIST = [
   self.location.hostname,
-  "huangxuan.me",
-  "yanshuo.io",
-  "cdnjs.cloudflare.com"
+  "cdnjs.cloudflare.com",
+  "giscus.app"
 ]
 const DEPRECATED_CACHES = ['precache-v1', 'runtime', 'main-precache-v1', 'main-runtime']
 
@@ -67,7 +65,7 @@ const getCacheBustingUrl = (req) => {
 // request.mode of 'navigate' is unfortunately not supported in Chrome
 // versions older than 49, so we need to include a less precise fallback,
 // which checks for a GET request with an Accept: text/html header.
-const isNavigationReq = (req) => (req.mode === 'navigate' || (req.method === 'GET' && req.headers.get('accept').includes('text/html')))
+const isNavigationReq = (req) => (req.mode === 'navigate' || (req.method === 'GET' && req.headers && req.headers.get('accept') && req.headers.get('accept').includes('text/html')))
 
 // The Util Function to detect if a req is end with extension
 // Accordin to Fetch API spec <https://fetch.spec.whatwg.org/#concept-request-destination>
@@ -123,13 +121,16 @@ self.addEventListener('install', e => {
  */
 self.addEventListener('activate', event => {
   // delete old deprecated caches.
-  caches.keys().then(cacheNames => Promise.all(
-    cacheNames
-      .filter(cacheName => DEPRECATED_CACHES.includes(cacheName))
-      .map(cacheName => caches.delete(cacheName))
-  ))
-  console.log('service worker activated.')
-  event.waitUntil(self.clients.claim());
+  event.waitUntil(
+    caches.keys().then(cacheNames => Promise.all(
+      cacheNames
+        .filter(cacheName => DEPRECATED_CACHES.includes(cacheName))
+        .map(cacheName => caches.delete(cacheName))
+    ).then(() => {
+      console.log('service worker activated.')
+      return self.clients.claim();
+    })
+  )
 });
 
 
@@ -200,9 +201,12 @@ self.addEventListener('fetch', event => {
     // If there’s nothing in cache, wait for the fetch.
     // If neither yields a response, return offline pages.
     event.respondWith(
-      Promise.race([fetched.catch(_ => cached), cached])
-        .then(resp => resp || fetched)
-        .catch(_ => caches.match('offline.html'))
+      cached.then(cachedResp => {
+        const fetchPromise = fetched.catch(() => null);
+        return Promise.race([fetchPromise, Promise.resolve(cachedResp)])
+          .then(resp => resp || cachedResp || fetched)
+          .catch(() => caches.match('offline.html'));
+      }).catch(() => fetched.catch(() => caches.match('offline.html')))
     );
 
     // Update the cache with the version we fetched (only for ok status)
@@ -229,7 +233,6 @@ self.addEventListener('fetch', event => {
 function sendMessageToAllClients(msg) {
   self.clients.matchAll().then(clients => {
     clients.forEach(client => {
-      console.log(client);
       client.postMessage(msg)
     })
   })
@@ -259,10 +262,11 @@ function revalidateContent(cachedResp, fetchedResp) {
   // revalidate when both promise resolved
   return Promise.all([cachedResp, fetchedResp])
     .then(([cached, fetched]) => {
-      const cachedVer = cached.headers.get('last-modified')
-      const fetchedVer = fetched.headers.get('last-modified')
+      if (!cached || !fetched) return;
+      const cachedVer = cached.headers && cached.headers.get('last-modified')
+      const fetchedVer = fetched.headers && fetched.headers.get('last-modified')
       console.log(`"${cachedVer}" vs. "${fetchedVer}"`);
-      if (cachedVer !== fetchedVer) {
+      if (cachedVer && fetchedVer && cachedVer !== fetchedVer) {
         sendMessageToClientsAsync({
           'command': 'UPDATE_FOUND',
           'url': fetched.url
