@@ -1,51 +1,64 @@
-/* Dark Mode Styles */
-body.dark-mode {
-    background-color: #1a1a1a;
-    color: #c0c0c0;
+/* Dark Mode Styles using CSS custom properties for better flexibility */
+[data-theme="dark"] {
+    --bg-color: #1a1a1a;
+    --text-color: #c0c0c0;
+    --border-color: #333;
+    --dropdown-bg: #2b2b2b;
+    --dropdown-text: #e0e0e0;
+    --dropdown-hover-bg: #3a3a3a;
+    --dropdown-hover-text: #ffffff;
+    --lang-toggle-bg: #2b2b2b;
+    --lang-toggle-lang-bg: #0085a1;
+}
+
+/* Apply CSS variables to elements when dark theme is active */
+[data-theme="dark"] body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
 }
 
 /* Navbar */
-body.dark-mode .navbar-custom {
+[data-theme="dark"] .navbar-custom {
     background-color: rgba(26, 26, 26, 0.9);
-    border-bottom: 1px solid #333;
+    border-bottom: 1px solid var(--border-color);
 }
 
-body.dark-mode .navbar-custom .dropdown-menu {
-    background-color: #2b2b2b;
+[data-theme="dark"] .navbar-custom .dropdown-menu {
+    background-color: var(--dropdown-bg);
     border-radius: 4px;
     border: 1px solid #444;
 }
 
-body.dark-mode .navbar-custom .dropdown-menu > li > a {
-    color: #e0e0e0 !important;
+[data-theme="dark"] .navbar-custom .dropdown-menu > li > a {
+    color: var(--dropdown-text) !important;
 }
 
-body.dark-mode .navbar-custom .dropdown-menu > li > a:hover,
-body.dark-mode .navbar-custom .dropdown-menu > li > a:focus {
-    background-color: #3a3a3a;
-    color: #ffffff !important;
+[data-theme="dark"] .navbar-custom .dropdown-menu > li > a:hover,
+[data-theme="dark"] .navbar-custom .dropdown-menu > li > a:focus {
+    background-color: var(--dropdown-hover-bg);
+    color: var(--dropdown-hover-text) !important;
 }
 
-body.dark-mode .dark-toggle-switch {
+[data-theme="dark"] .dark-toggle-switch {
     background: #007aff;
     box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.25);
 }
 
-body.dark-mode .dark-toggle-label {
+[data-theme="dark"] .dark-toggle-label {
     color: #ddd;
 }
 
-body.dark-mode .dark-toggle-knob {
+[data-theme="dark"] .dark-toggle-knob {
     transform: translateX(18px);
 }
 
-body.dark-mode .lang-toggle-switch {
-    background: #2b2b2b;
+[data-theme="dark"] .lang-toggle-switch {
+    background: var(--lang-toggle-bg);
     box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.12);
 }
 
-body.dark-mode.lang-en .lang-toggle-switch {
-    background: #0085a1;
+[data-theme="dark"].lang-en .lang-toggle-switch {
+    background: var(--lang-toggle-lang-bg);
     box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.25);
 }
 

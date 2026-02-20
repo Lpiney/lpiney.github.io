@@ -22,7 +22,8 @@ module.exports = function(grunt) {
                         'js/simple-jekyll-search.min.js',
                         'js/snackbar.js',
                         'js/dark-mode.js',
-                        'js/language.js'
+                        'js/language.js',
+                        'js/lazy-load.js'
                     ]
                 }
             }

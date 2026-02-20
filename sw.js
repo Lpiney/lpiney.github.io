@@ -21,6 +21,7 @@ const PRECACHE_LIST = [
   "./js/dark-mode.js",
   "./js/language.js",
   "./js/snackbar.js",
+  "./js/lazy-load.js",
   "./img/icon_wechat.png",
   "./img/home-bg.jpg",
   "./img/404-bg.jpg",
@@ -37,6 +38,10 @@ const HOSTNAME_WHITELIST = [
 ];
 // 旧版本的缓存名称（用于清理）
 const DEPRECATED_CACHES = ['precache-v1', 'runtime', 'main-precache-v1', 'main-runtime'];
+
+// 推送通知相关配置
+const NOTIFICATION_ICON = './pwa/icons/192.png';
+const NOTIFICATION_TIMEOUT = 10000; // 10秒后自动关闭通知
 
 /**
  * 给 URL 添加随机参数，强制从网络获取最新内容（绕过浏览器缓存）
@@ -153,7 +158,101 @@ const fetchHelper = {
     }
     return response;
   }
-};
+}
+
+/**
+ * 推送通知事件处理
+ */
+self.addEventListener('push', event => {
+  let payload = {};
+  
+  try {
+    payload = event.data.json();
+  } catch (e) {
+    payload = {
+      title: 'Bruce Blog',
+      body: event.data.text(),
+      icon: NOTIFICATION_ICON,
+      badge: NOTIFICATION_ICON
+    };
+  }
+
+  const options = {
+    body: payload.body || '您有一条新消息',
+    icon: payload.icon || NOTIFICATION_ICON,
+    badge: payload.badge || NOTIFICATION_ICON,
+    tag: payload.tag || 'blog-notification',
+    data: payload.data || {},
+    actions: payload.actions || []
+  };
+
+  event.waitUntil(
+    self.registration.showNotification(payload.title || 'Bruce Blog', options)
+  );
+});
+
+/**
+ * 通知点击事件处理
+ */
+self.addEventListener('notificationclick', event => {
+  event.notification.close();
+
+  if (event.action) {
+    // 处理通知动作
+    console.log('Notification action:', event.action);
+  } else {
+    // 默认点击行为：打开博客主页
+    event.waitUntil(
+      clients.openWindow(event.notification.data.url || '/')
+    );
+  }
+});
+
+/**
+ * 后台同步事件处理
+ */
+self.addEventListener('sync', event => {
+  if (event.tag === 'sync-posts') {
+    event.waitUntil(syncPosts());
+  }
+});
+
+/**
+ * 同步帖子数据的函数
+ */
+async function syncPosts() {
+  try {
+    // 这里可以实现离线期间收集的数据同步
+    console.log('Syncing posts...');
+    // 实际的同步逻辑会根据应用需求定制
+  } catch (error) {
+    console.error('Sync failed:', error);
+    // 可以尝试延迟重试
+    throw error;
+  }
+}
+
+/**
+ * 订阅到期事件处理
+ */
+self.addEventListener('pushsubscriptionchange', event => {
+  event.waitUntil(
+    self.registration.pushManager.subscribe(event.oldSubscription.options)
+      .then(newSubscription => {
+        // 发送新订阅到服务器
+        return fetch('/api/subscription/update', {
+          method: 'POST',
+          body: JSON.stringify({ 
+            oldEndpoint: event.oldSubscription.endpoint,
+            newEndpoint: newSubscription.endpoint 
+          }),
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        });
+      })
+  );
+});;
 
 /**
  * @Lifecycle Fetch

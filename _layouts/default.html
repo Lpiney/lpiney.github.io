@@ -103,6 +103,8 @@
         gtag('config', '{{ site.ga4_measurement_id }}');
     </script>
     {% endif %}
+    
+    <script src="{{ "/js/lazy-load.js" | prepend: site.baseurl }}"></script>
 </head>
 
 <!-- hack iOS CSS :active style -->

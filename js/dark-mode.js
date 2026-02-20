@@ -1,6 +1,6 @@
 (function() {
-    // 获取页面的 body 元素（整个网页的主体）
-    const body = document.body;
+    // 获取页面的 html 元素（用于设置 data-theme 属性）
+    const html = document.documentElement;
     // 存储用户暗黑模式偏好的键名
     const STORAGE_KEY = 'dark-mode';
 
@@ -9,8 +9,13 @@
      * @param {boolean} isDark - 是否开启暗黑模式
      */
     function setDarkMode(isDark) {
-        // 使用 classList.toggle 方法切换暗黑模式类
-        body.classList.toggle('dark-mode', isDark);
+        // 使用 data-theme 属性切换主题，配合 CSS 变量使用
+        if (isDark) {
+            html.setAttribute('data-theme', 'dark');
+        } else {
+            html.removeAttribute('data-theme');
+        }
+        
         // 将用户的偏好保存到浏览器本地存储
         localStorage.setItem(STORAGE_KEY, isDark);
         // 更新切换按钮上的图标
@@ -28,7 +33,7 @@
         
         if (icon) {
             // 检查当前是否是暗黑模式
-            const isDark = body.classList.contains('dark-mode');
+            const isDark = html.getAttribute('data-theme') === 'dark';
             if (isDark) {
                 // 暗黑模式：显示太阳图标（点击可以切换到白天）
                 icon.className = 'fa fa-sun-o';
@@ -59,7 +64,8 @@
                 // 阻止链接的默认跳转行为
                 e.preventDefault();
                 // 检查当前模式，然后切换到相反的模式
-                setDarkMode(!body.classList.contains('dark-mode'));
+                const isCurrentlyDark = html.getAttribute('data-theme') === 'dark';
+                setDarkMode(!isCurrentlyDark);
             });
         }
 
