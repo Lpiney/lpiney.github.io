@@ -1,5 +1,5 @@
 /* Dark Mode Styles using CSS custom properties for better flexibility */
-[data-theme="dark"] {
+[data-theme="dark"], body.dark-mode {
     --bg-color: #1a1a1a;
     --text-color: #c0c0c0;
     --border-color: #333;
@@ -12,52 +12,54 @@
 }
 
 /* Apply CSS variables to elements when dark theme is active */
-[data-theme="dark"] body {
+[data-theme="dark"] body, body.dark-mode {
     background-color: var(--bg-color);
     color: var(--text-color);
 }
 
 /* Navbar */
-[data-theme="dark"] .navbar-custom {
+[data-theme="dark"] .navbar-custom, body.dark-mode .navbar-custom {
     background-color: rgba(26, 26, 26, 0.9);
     border-bottom: 1px solid var(--border-color);
 }
 
-[data-theme="dark"] .navbar-custom .dropdown-menu {
+[data-theme="dark"] .navbar-custom .dropdown-menu, body.dark-mode .navbar-custom .dropdown-menu {
     background-color: var(--dropdown-bg);
     border-radius: 4px;
     border: 1px solid #444;
 }
 
-[data-theme="dark"] .navbar-custom .dropdown-menu > li > a {
+[data-theme="dark"] .navbar-custom .dropdown-menu > li > a, body.dark-mode .navbar-custom .dropdown-menu > li > a {
     color: var(--dropdown-text) !important;
 }
 
 [data-theme="dark"] .navbar-custom .dropdown-menu > li > a:hover,
-[data-theme="dark"] .navbar-custom .dropdown-menu > li > a:focus {
+[data-theme="dark"] .navbar-custom .dropdown-menu > li > a:focus,
+body.dark-mode .navbar-custom .dropdown-menu > li > a:hover,
+body.dark-mode .navbar-custom .dropdown-menu > li > a:focus {
     background-color: var(--dropdown-hover-bg);
     color: var(--dropdown-hover-text) !important;
 }
 
-[data-theme="dark"] .dark-toggle-switch {
+[data-theme="dark"] .dark-toggle-switch, body.dark-mode .dark-toggle-switch {
     background: #007aff;
     box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.25);
 }
 
-[data-theme="dark"] .dark-toggle-label {
+[data-theme="dark"] .dark-toggle-label, body.dark-mode .dark-toggle-label {
     color: #ddd;
 }
 
-[data-theme="dark"] .dark-toggle-knob {
+[data-theme="dark"] .dark-toggle-knob, body.dark-mode .dark-toggle-knob {
     transform: translateX(18px);
 }
 
-[data-theme="dark"] .lang-toggle-switch {
+[data-theme="dark"] .lang-toggle-switch, body.dark-mode .lang-toggle-switch {
     background: var(--lang-toggle-bg);
     box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.12);
 }
 
-[data-theme="dark"].lang-en .lang-toggle-switch {
+[data-theme="dark"].lang-en .lang-toggle-switch, body.dark-mode.lang-en .lang-toggle-switch {
     background: var(--lang-toggle-lang-bg);
     box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.25);
 }
