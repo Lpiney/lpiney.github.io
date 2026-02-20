@@ -6,12 +6,8 @@
  * service worker scripting
  * ========================================================== */
 
-// 缓存命名空间（防止同一域名下不同网站的缓存冲突）
-const CACHE_NAMESPACE = 'main-'
-
-// 当前使用的缓存名称
+const CACHE_NAMESPACE = 'main-';
 const CACHE = CACHE_NAMESPACE + 'precache-then-runtime';
-// 预缓存列表：这些文件会在 Service Worker 安装时就下载好
 const PRECACHE_LIST = [
   "./",
   "./offline.html",
@@ -29,237 +25,148 @@ const PRECACHE_LIST = [
   "./css/bruce-blog.min.css",
   "./css/dark-mode.css",
   "./css/language.css"
-]
+];
 const HOSTNAME_WHITELIST = [
   self.location.hostname,
   "cdnjs.cloudflare.com",
   "giscus.app"
-]
-// 旧版本的缓存名称（用于清理）
-const DEPRECATED_CACHES = ['precache-v1', 'runtime', 'main-precache-v1', 'main-runtime']
+];
+const DEPRECATED_CACHES = ['precache-v1', 'runtime', 'main-precache-v1', 'main-runtime'];
 
-
-// 给 URL 添加随机参数，强制从网络获取最新内容（绕过浏览器缓存）
 const getCacheBustingUrl = (req) => {
   const now = Date.now();
-  const url = new URL(req.url)
-
-  // 统一使用和当前页面一样的协议（http 或 https）
-  url.protocol = self.location.protocol
-
-  // 添加 cache-bust 参数，强制获取最新内容
+  const url = new URL(req.url);
+  url.protocol = self.location.protocol;
   url.search += (url.search ? '&' : '?') + 'cache-bust=' + now;
-  return url.href
-}
+  return url.href;
+};
 
-// 判断是不是页面导航请求（而不是图片/JS/CSS 等资源请求）
-const isNavigationReq = (req) => (req.mode === 'navigate' || (req.method === 'GET' && req.headers && req.headers.get('accept') && req.headers.get('accept').includes('text/html')))
+const isNavigationReq = (req) => (
+  req.mode === 'navigate' || 
+  (req.method === 'GET' && 
+   req.headers?.get('accept')?.includes('text/html'))
+);
 
-// The Util Function to detect if a req is end with extension
-// Accordin to Fetch API spec <https://fetch.spec.whatwg.org/#concept-request-destination>
-// Any HTML's navigation has consistently mode="navigate" type="" and destination="document"
-// including requesting an img (or any static resources) from URL Bar directly.
-// So It ends up with that regExp is still the king of URL routing ;)
-// P.S. An url.pathname has no '.' can not indicate it ends with extension (e.g. /api/version/1.2/)
-const endWithExtension = (req) => Boolean(new URL(req.url).pathname.match(/\.\w+$/))
+const endWithExtension = (req) => /\.\w+$/.test(new URL(req.url).pathname);
 
-// Redirect in SW manually fixed github pages arbitray 404s on things?blah
-// what we want:
-//    repo?blah -> !(gh 404) -> sw 302 -> repo/?blah
-//    .ext?blah -> !(sw 302 -> .ext/?blah -> gh 404) -> .ext?blah
-// If It's a navigation req and it's url.pathname isn't end with '/' or '.ext'
-// it should be a dir/repo request and need to be fixed (a.k.a be redirected)
-// Tracking https://twitter.com/Huxpro/status/798816417097224193
-const shouldRedirect = (req) => (isNavigationReq(req) && new URL(req.url).pathname.substr(-1) !== "/" && !endWithExtension(req))
+const shouldRedirect = (req) => (
+  isNavigationReq(req) && 
+  !req.url.endsWith('/') && 
+  !endWithExtension(req)
+);
 
-// The Util Function to get redirect URL
-// `${url}/` would mis-add "/" in the end of query, so we use URL object.
-// P.P.S. Always trust url.pathname instead of the whole url string.
 const getRedirectUrl = (req) => {
-  const url = new URL(req.url)
-  url.pathname += "/"
-  return url.href
-}
+  const url = new URL(req.url);
+  url.pathname += "/";
+  return url.href;
+};
 
-
-/**
- *  @Lifecycle Install
- *  Precache anything static to this version of your app.
- *  e.g. App Shell, 404, JS/CSS dependencies...
- *
- *  waitUntil() : installing ====> installed
- *  skipWaiting() : waiting(installed) ====> activating
- */
 self.addEventListener('install', e => {
   e.waitUntil(
-    caches.open(CACHE).then(cache => {
-      return cache.addAll(PRECACHE_LIST)
-        .then(() => self.skipWaiting())
-        .catch(err => console.log(err))
-    })
-  )
+    caches.open(CACHE)
+      .then(cache => cache.addAll(PRECACHE_LIST))
+      .then(() => self.skipWaiting())
+      .catch(err => console.error('Pre-cache failed:', err))
+  );
 });
 
-
-/**
- *  @Lifecycle Activate
- *  New one activated when old isnt being used.
- *
- *  waitUntil(): activating ====> activated
- */
-self.addEventListener('activate', event => {
-  // delete old deprecated caches.
-  event.waitUntil(
-    caches.keys().then(cacheNames => Promise.all(
-      cacheNames
-        .filter(cacheName => DEPRECATED_CACHES.includes(cacheName))
-        .map(cacheName => caches.delete(cacheName))
-    ).then(() => {
-      console.log('service worker activated.')
-      return self.clients.claim();
-    })
-  )
+self.addEventListener('activate', e => {
+  e.waitUntil(
+    caches.keys()
+      .then(keys => Promise.all(
+        keys.filter(key => DEPRECATED_CACHES.includes(key))
+            .map(key => caches.delete(key))
+      ))
+      .then(() => self.clients.claim())
+  );
 });
 
-
-var fetchHelper = {
-
-  fetchThenCache: function(request){
-    // Requests with mode "no-cors" can result in Opaque Response,
-    // Requests to Allow-Control-Cross-Origin: * can't include credentials.
-    const init = { mode: "cors", credentials: "omit" } 
-
-    const fetched = fetch(request, init)
-    const fetchedCopy = fetched.then(resp => resp.clone());
-
-    // NOTE: Opaque Responses have no hedaders so [[ok]] make no sense to them
-    //       so Opaque Resp will not be cached in this case.
-    Promise.all([fetchedCopy, caches.open(CACHE)])
-      .then(([response, cache]) => response.ok && cache.put(request, response))
-      .catch(_ => {/* eat any errors */})
-    
-    return fetched;
+const fetchHelper = {
+  fetchThenCache: async function(request) {
+    const init = { mode: "cors", credentials: "omit" };
+    const response = await fetch(request, init);
+    if (response.ok) {
+      const copy = response.clone();
+      const cache = await caches.open(CACHE);
+      cache.put(request, copy);
+    }
+    return response;
   },
 
-  cacheFirst: function(url){
-    return caches.match(url) 
-      .then(resp => resp || this.fetchThenCache(url))
-      .catch(_ => {/* eat any errors */})
+  cacheFirst: async function(url) {
+    let response = await caches.match(url);
+    if (!response) {
+      response = await this.fetchThenCache(url);
+    }
+    return response;
   }
-}
+};
 
+self.addEventListener('fetch', e => {
+  const url = new URL(e.request.url);
+  if (!HOSTNAME_WHITELIST.includes(url.hostname)) return;
 
-/**
- *  @Functional Fetch
- *  All network requests are being intercepted here.
- *
- *  void respondWith(Promise<Response> r);
- */
-self.addEventListener('fetch', event => {
-  // logs for debugging
-  //console.log(`fetch ${event.request.url}`)
-  //console.log(` - type: ${event.request.type}; destination: ${event.request.destination}`)
-  //console.log(` - mode: ${event.request.mode}, accept: ${event.request.headers.get('accept')}`)
+  if (shouldRedirect(e.request)) {
+    e.respondWith(Response.redirect(getRedirectUrl(e.request)));
+    return;
+  }
 
-  // Skip some of cross-origin requests, like those for Google Analytics.
-  if (HOSTNAME_WHITELIST.indexOf(new URL(event.request.url).hostname) > -1) {
+  if (e.request.url.includes('ys.static')) {
+    e.respondWith(fetchHelper.cacheFirst(e.request.url));
+    return;
+  }
 
-    // Redirect in SW manually fixed github pages 404s on repo?blah
-    if (shouldRedirect(event.request)) {
-      event.respondWith(Response.redirect(getRedirectUrl(event.request)))
-      return;
-    }
+  const cached = caches.match(e.request);
+  const fetched = fetch(getCacheBustingUrl(e.request), { cache: "no-store" });
 
-    // Cache-only Startgies for ys.static resources
-    if (event.request.url.indexOf('ys.static') > -1){
-      event.respondWith(fetchHelper.cacheFirst(event.request.url))
-      return;
-    }
+  e.respondWith(
+    cached.then(cachedResp => {
+      const fetchPromise = fetched.catch(() => null);
+      return Promise.race([fetchPromise, Promise.resolve(cachedResp)])
+        .then(resp => resp || cachedResp || fetched)
+        .catch(() => caches.match('offline.html'));
+    }).catch(() => fetched.catch(() => caches.match('offline.html')))
+  );
 
-    // Stale-while-revalidate for possiblily dynamic content
-    // similar to HTTP's stale-while-revalidate: https://www.mnot.net/blog/2007/12/12/stale
-    // Upgrade from Jake's to Surma's: https://gist.github.com/surma/eb441223daaedf880801ad80006389f1
-    const cached = caches.match(event.request);
-    const fetched = fetch(getCacheBustingUrl(event.request), { cache: "no-store" });
-    const fetchedCopy = fetched.then(resp => resp.clone());
-    
-    // Call respondWith() with whatever we get first.
-    // Promise.race() resolves with first one settled (even rejected)
-    // If the fetch fails (e.g disconnected), wait for the cache.
-    // If there’s nothing in cache, wait for the fetch.
-    // If neither yields a response, return offline pages.
-    event.respondWith(
-      cached.then(cachedResp => {
-        const fetchPromise = fetched.catch(() => null);
-        return Promise.race([fetchPromise, Promise.resolve(cachedResp)])
-          .then(resp => resp || cachedResp || fetched)
-          .catch(() => caches.match('offline.html'));
-      }).catch(() => fetched.catch(() => caches.match('offline.html')))
-    );
+  e.waitUntil(
+    Promise.all([fetched, caches.open(CACHE)])
+      .then(async ([response, cache]) => {
+        if (response?.ok) {
+          const copy = response.clone();
+          cache.put(e.request, copy);
+        }
+      })
+  );
 
-    // Update the cache with the version we fetched (only for ok status)
-    event.waitUntil(
-      Promise.all([fetchedCopy, caches.open(CACHE)])
-        .then(([response, cache]) => response.ok && cache.put(event.request, response))
-        .catch(_ => {/* eat any errors */ })
-    );
-
-    // If one request is a HTML naviagtion, checking update!
-    if (isNavigationReq(event.request)) {
-      // you need "preserve logs" to see this log
-      // cuz it happened before navigating
-      console.log(`fetch ${event.request.url}`)
-      event.waitUntil(revalidateContent(cached, fetchedCopy))
-    }
+  if (isNavigationReq(e.request)) {
+    e.waitUntil(revalidateContent(cached, fetched.then(r => r.clone())));
   }
 });
 
-
-/**
- * Broadcasting all clients with MessageChannel API
- */
 function sendMessageToAllClients(msg) {
   self.clients.matchAll().then(clients => {
-    clients.forEach(client => {
-      client.postMessage(msg)
-    })
-  })
+    clients.forEach(client => client.postMessage(msg));
+  });
 }
 
-/**
- * Broadcasting all clients async
- */
 function sendMessageToClientsAsync(msg) {
-  // waiting for new client alive with "async" setTimeout hacking
-  // https://twitter.com/Huxpro/status/799265578443751424
-  // https://jakearchibald.com/2016/service-worker-meeting-notes/#fetch-event-clients
-  setTimeout(() => {
-    sendMessageToAllClients(msg)
-  }, 1000)
+  setTimeout(() => sendMessageToAllClients(msg), 1000);
 }
 
-/**
- * if content modified, we can notify clients to refresh
- * TODO: Gh-pages rebuild everything in each release. should find a workaround (e.g. ETag with cloudflare)
- * 
- * @param  {Promise<response>} cachedResp  [description]
- * @param  {Promise<response>} fetchedResp [description]
- * @return {Promise}
- */
-function revalidateContent(cachedResp, fetchedResp) {
-  // revalidate when both promise resolved
-  return Promise.all([cachedResp, fetchedResp])
-    .then(([cached, fetched]) => {
-      if (!cached || !fetched) return;
-      const cachedVer = cached.headers && cached.headers.get('last-modified')
-      const fetchedVer = fetched.headers && fetched.headers.get('last-modified')
-      console.log(`"${cachedVer}" vs. "${fetchedVer}"`);
-      if (cachedVer && fetchedVer && cachedVer !== fetchedVer) {
-        sendMessageToClientsAsync({
-          'command': 'UPDATE_FOUND',
-          'url': fetched.url
-        })
-      }
-    })
-    .catch(err => console.log(err))
+async function revalidateContent(cachedResp, fetchedResp) {
+  try {
+    const [cached, fetched] = await Promise.all([cachedResp, fetchedResp]);
+    if (!cached || !fetched) return;
+    
+    const cachedVer = cached.headers?.get('last-modified');
+    const fetchedVer = fetched.headers?.get('last-modified');
+    if (cachedVer && fetchedVer && cachedVer !== fetchedVer) {
+      sendMessageToClientsAsync({
+        'command': 'UPDATE_FOUND',
+        'url': fetched.url
+      });
+    }
+  } catch (err) {
+    console.error('Revalidation error:', err);
+  }
 }
