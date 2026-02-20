@@ -104,7 +104,7 @@
     </script>
     {% endif %}
     
-    <script src="{{ "/js/lazy-load.js" | prepend: site.baseurl }}"></script>
+    <script src="{{ "/js/lazy-load.js" | prepend: site.baseurl }}?v={{ site.time | date: '%s' }}"></script>
 </head>
 
 <!-- hack iOS CSS :active style -->

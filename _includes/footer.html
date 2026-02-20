@@ -29,28 +29,28 @@
 </footer>
 
 <!-- jQuery -->
-<script src="{{ "/js/jquery.min.js" | prepend: site.baseurl }}"></script>
+<script src="{{ "/js/jquery.min.js" | prepend: site.baseurl }}?v={{ site.time | date: '%s' }}"></script>
 
 <!-- Bootstrap Core JavaScript -->
 <!-- Currently, only navbar scroll-down effect at desktop still depends on this -->
-<script src="{{ "/js/bootstrap.min.js" | prepend: site.baseurl }}"></script>
+<script src="{{ "/js/bootstrap.min.js" | prepend: site.baseurl }}?v={{ site.time | date: '%s' }}"></script>
 
 <!-- Custom Theme JavaScript -->
-<script src="{{ "/js/hux-blog.min.js" | prepend: site.baseurl }}"></script>
+<script src="{{ "/js/hux-blog.min.js" | prepend: site.baseurl }}?v={{ site.time | date: '%s' }}"></script>
 
 <!-- Simple Jekyll Search -->
-<script src="{{ "/js/simple-jekyll-search.min.js" | prepend: site.baseurl }}"></script>
+<script src="{{ "/js/simple-jekyll-search.min.js" | prepend: site.baseurl }}?v={{ site.time | date: '%s' }}"></script>
 
 <!-- Dark Mode JS -->
-<script src="{{ "/js/dark-mode.js" | prepend: site.baseurl }}"></script>
+<script src="{{ "/js/dark-mode.js" | prepend: site.baseurl }}?v={{ site.time | date: '%s' }}"></script>
 
 <!-- Language Toggle JS -->
-<script src="{{ "/js/language.js" | prepend: site.baseurl }}"></script>
+<script src="{{ "/js/language.js" | prepend: site.baseurl }}?v={{ site.time | date: '%s' }}"></script>
 
 <!-- Service Worker -->
 {% if site.service-worker %}
-<script src="{{ "/js/snackbar.js" | prepend: site.baseurl }}"></script>
-<script src="{{ "/js/sw-registration.js" | prepend: site.baseurl }}"></script>
+<script src="{{ "/js/snackbar.js" | prepend: site.baseurl }}?v={{ site.time | date: '%s' }}"></script>
+<script src="{{ "/js/sw-registration.js" | prepend: site.baseurl }}?v={{ site.time | date: '%s' }}"></script>
 {% endif %}
 
 <!-- async load function -->
