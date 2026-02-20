@@ -18,12 +18,10 @@ module.exports = function(grunt) {
                         'js/jquery.min.js',
                         'js/bootstrap.min.js',
                         'js/jquery.nav.js',
+                        'js/hux-blog.js',
                         'js/archive.js',
                         'js/simple-jekyll-search.min.js',
-                        'js/snackbar.js',
-                        'js/dark-mode.js',
-                        'js/language.js',
-                        'js/lazy-load.js'
+                        'js/snackbar.js'
                     ]
                 }
             }
