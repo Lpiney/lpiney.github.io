@@ -29,14 +29,14 @@
         // 创建目录容器
         const tocContainer = document.createElement('div');
         tocContainer.id = 'table-of-contents';
-        tocContainer.className = 'toc';
+        tocContainer.className = 'toc toc-fixed';
         tocContainer.innerHTML = `
             <div class="toc-title">文章目录</div>
             <div class="toc-content">${tocHtml}</div>
         `;
         
-        // 将目录插入到文章开头
-        postContent.insertBefore(tocContainer, postContent.firstChild);
+        // 将目录添加到页面主体
+        document.body.appendChild(tocContainer);
         
         // 添加平滑滚动功能
         addSmoothScrolling();
