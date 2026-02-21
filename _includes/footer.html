@@ -47,6 +47,11 @@
 <!-- Language Toggle JS -->
 <script src="{{ "/js/language.js" | prepend: site.baseurl }}?v={{ site.time | date: '%s' }}"></script>
 
+<!-- Additional Features -->
+<script src="{{ "/js/toc.js" | prepend: site.baseurl }}?v={{ site.time | date: '%s' }}"></script>
+<script src="{{ "/js/reading-time.js" | prepend: site.baseurl }}?v={{ site.time | date: '%s' }}"></script>
+<script src="{{ "/js/keyword-highlight.js" | prepend: site.baseurl }}?v={{ site.time | date: '%s' }}"></script>
+
 <!-- Service Worker -->
 {% if site.service-worker %}
 <script src="{{ "/js/snackbar.js" | prepend: site.baseurl }}?v={{ site.time | date: '%s' }}"></script>
