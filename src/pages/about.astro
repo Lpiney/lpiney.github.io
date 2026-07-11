@@ -2,6 +2,7 @@
 import { getCollection, render } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Nav from '../components/Nav.astro';
+import SteamProfile from '../components/SteamProfile.astro';
 const pages = await getCollection('pages');
 const aboutZh = pages.find((page) => page.id.endsWith('zh'));
 const aboutEn = pages.find((page) => page.id.endsWith('en'));
@@ -19,5 +20,6 @@ const { Content: AboutEn } = await render(aboutEn);
       <div class="prose lang-zh"><AboutZh /></div>
       <div class="prose lang-en"><AboutEn /></div>
     </div>
+    <SteamProfile />
   </main>
 </BaseLayout>

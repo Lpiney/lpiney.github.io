@@ -1,0 +1,18 @@
+---
+const profileUrl = 'https://steamcommunity.com/id/bruceL1/';
+const avatarUrl = 'https://avatars.fastly.steamstatic.com/b724babfb1379eb4dccac79d11c60439a0d0e01b_full.jpg';
+---
+
+<section class="steam-profile" aria-labelledby="steam-profile-title">
+  <div class="steam-profile-kicker"><span class="pulse"></span><span>STEAM / PUBLIC PROFILE</span><span>76561198924124049</span></div>
+  <div class="steam-profile-main">
+    <img src={avatarUrl} alt="Schwarzer Regen's Steam avatar" loading="lazy" />
+    <div>
+      <p class="eyebrow">PLAYER PROFILE</p>
+      <h2 id="steam-profile-title">Schwarzer Regen</h2>
+      <p class="steam-summary"><span class="zh-only">踏上重返宇宙的旅程。</span><span class="en-only">Embark on a journey back to the cosmos.</span></p>
+    </div>
+    <div class="steam-level"><b>32</b><span><span class="zh-only">STEAM 等级</span><span class="en-only">STEAM LEVEL</span></span></div>
+  </div>
+  <div class="steam-profile-footer"><span><i></i><span class="zh-only">公开档案 · 在线</span><span class="en-only">PUBLIC PROFILE · ONLINE</span></span><a href={profileUrl} target="_blank" rel="noopener"><span class="zh-only">打开 Steam 档案</span><span class="en-only">Open Steam profile</span> ↗</a></div>
+</section>
