@@ -22,4 +22,4 @@ To enable Giscus, copy `.env.example` to `.env` and fill in the repository and c
 
 ## Deployment
 
-Pushing to `main` runs `.github/workflows/deploy.yml`, which builds and publishes the static output through GitHub Pages. In the repository settings, set **Pages → Build and deployment → Source** to **GitHub Actions**. This repository publishes at `https://lpiney.github.io/Bruce.github.io/`; the Astro config adds that project path automatically during GitHub Actions builds.
+Pushing to `master` runs `.github/workflows/deploy.yml`, which builds and publishes the static output through GitHub Pages. In the repository settings, set **Pages → Build and deployment → Source** to **GitHub Actions**. When deployed to `Lpiney/Lpiney.github.io`, the site is available at `https://lpiney.github.io/`.
