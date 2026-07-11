@@ -1,0 +1,29 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Nav from '../components/Nav.astro';
+import PostCard from '../components/PostCard.astro';
+
+const posts = (await getCollection('posts', ({ data }) => !data.draft)).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+---
+
+<BaseLayout>
+  <Nav active="home" />
+  <main>
+    <section class="hero container">
+      <div class="hero-kicker"><span class="pulse"></span><span class="zh-only">个人知识终端 · 在线</span><span class="en-only">Personal knowledge terminal · online</span></div>
+      <p class="hero-index">01—∞</p>
+      <h1><span class="zh-only">离开世界之前<br />一切都是<strong>过程</strong></span><span class="en-only">Before leaving this world,<br />everything is <strong>in progress.</strong></span></h1>
+      <div class="hero-footer">
+        <p class="zh-only">关于机器人、独立游戏与那些值得反复思考的科技。</p>
+        <p class="en-only">Notes on robots, indie games, and technology worth thinking about twice.</p>
+        <a href="#notes" class="text-link"><span class="zh-only">浏览文章</span><span class="en-only">Browse notes</span> <b>↓</b></a>
+      </div>
+    </section>
+    <section class="notes container" id="notes">
+      <div class="section-title"><p class="eyebrow"><span class="zh-only">最新信号</span><span class="en-only">Latest signals</span></p><span>{String(posts.length).padStart(2, '0')} NOTES</span></div>
+      <div class="post-list">{posts.map((post, index) => <PostCard {post} {index} />)}</div>
+    </section>
+  </main>
+  <footer class="footer container"><span>© {new Date().getFullYear()} BRUCE LOG</span><span class="zh-only">以好奇心持续运行</span><span class="en-only">Running on curiosity</span></footer>
+</BaseLayout>

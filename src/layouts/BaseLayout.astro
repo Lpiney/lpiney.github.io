@@ -1,0 +1,45 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = 'Bruce // Field Notes',
+  description = 'Robotics, independent games, and curious technology.',
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="zh-CN" data-lang="zh">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#070b16" />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E✦%3C/text%3E%3C/svg%3E" />
+    <title>{title}</title>
+  </head>
+  <body>
+    <slot />
+    <script is:inline>
+      const key = 'bruce-language';
+      const setLanguage = (language) => {
+        document.documentElement.dataset.lang = language;
+        document.documentElement.lang = language === 'zh' ? 'zh-CN' : 'en';
+        localStorage.setItem(key, language);
+        document.querySelectorAll('[data-language-label]').forEach((node) => {
+          node.textContent = language === 'zh' ? 'EN' : '中';
+        });
+      };
+      setLanguage(localStorage.getItem(key) || 'zh');
+      document.querySelectorAll('[data-language-toggle]').forEach((button) => {
+        button.addEventListener('click', () => {
+          setLanguage(document.documentElement.dataset.lang === 'zh' ? 'en' : 'zh');
+        });
+      });
+    </script>
+  </body>
+</html>

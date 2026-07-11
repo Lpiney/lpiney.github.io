@@ -1,0 +1,16 @@
+---
+const { active = 'home' } = Astro.props;
+const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
+---
+
+<header class="nav-shell">
+  <nav class="nav container" aria-label="Primary navigation">
+    <a class="brand" href={base} aria-label="Bruce Blog home"><span>✦</span> BRUCE<span class="brand-fade">.LOG</span></a>
+    <div class="nav-links">
+      <a class:list={[{ active: active === 'home' }]} href={base}><span class="zh-only">首页</span><span class="en-only">Home</span></a>
+      <a class:list={[{ active: active === 'archive' }]} href={`${base}archive/`}><span class="zh-only">归档</span><span class="en-only">Archive</span></a>
+      <a class:list={[{ active: active === 'about' }]} href={`${base}about/`}><span class="zh-only">关于</span><span class="en-only">About</span></a>
+    </div>
+    <button class="language-toggle" type="button" data-language-toggle aria-label="Switch language"><span data-language-label>EN</span></button>
+  </nav>
+</header>
