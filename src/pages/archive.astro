@@ -3,7 +3,7 @@ import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Nav from '../components/Nav.astro';
 import PostCard from '../components/PostCard.astro';
-const posts = (await getCollection('posts')).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+const posts = (await getCollection('posts', ({ data }) => !data.draft)).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 ---
 <BaseLayout title="Archive · Bruce Log">
   <Nav active="archive" />
@@ -11,6 +11,27 @@ const posts = (await getCollection('posts')).sort((a, b) => b.data.date.valueOf(
     <p class="eyebrow">02 / ARCHIVE</p>
     <h1 class="page-title"><span class="zh-only">所有<strong>记录</strong></span><span class="en-only">All <strong>records</strong></span></h1>
     <p class="page-lede"><span class="zh-only">按时间倒序排列的思考、观察与影评。</span><span class="en-only">Thoughts, observations, and reviews in reverse chronological order.</span></p>
-    <div class="post-list archive-list">{posts.map((post, index) => <PostCard {post} {index} />)}</div>
+    <label class="archive-search">
+      <span class="sr-only"><span class="zh-only">搜索文章</span><span class="en-only">Search notes</span></span>
+      <span aria-hidden="true">⌕</span>
+      <input type="search" data-post-search placeholder="搜索标题、主题或内容… / Search notes…" autocomplete="off" />
+    </label>
+    <p class="search-empty" data-search-empty hidden><span class="zh-only">没有匹配的记录。</span><span class="en-only">No matching notes.</span></p>
+    <div class="post-list archive-list" data-search-list>{posts.map((post, index) => <div data-search-item data-search-text={`${post.data.title} ${post.data.subtitle || ''} ${post.data.tags.join(' ')} ${post.body}`.toLowerCase()}><PostCard {post} {index} /></div>)}</div>
   </main>
+  <script>
+    const input = document.querySelector('[data-post-search]') as HTMLInputElement | null;
+    const items = [...document.querySelectorAll<HTMLElement>('[data-search-item]')];
+    const empty = document.querySelector<HTMLElement>('[data-search-empty]');
+    input?.addEventListener('input', () => {
+      const query = input.value.trim().toLowerCase();
+      let matches = 0;
+      items.forEach((item) => {
+        const visible = !query || item.dataset.searchText?.includes(query);
+        item.hidden = !visible;
+        if (visible) matches += 1;
+      });
+      if (empty) empty.hidden = matches > 0;
+    });
+  </script>
 </BaseLayout>

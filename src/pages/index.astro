@@ -23,7 +23,7 @@ const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL :
       <div class="hero-footer">
         <p class="zh-only">关于机器人、独立游戏与那些值得反复思考的科技。</p>
         <p class="en-only">Notes on robots, indie games, and technology worth thinking about twice.</p>
-        <a href="#notes" class="text-link"><span class="zh-only">浏览文章</span><span class="en-only">Browse notes</span> <b>↓</b></a>
+        <span class="hero-actions"><a href="#notes" class="text-link"><span class="zh-only">浏览文章</span><span class="en-only">Browse notes</span> <b>↓</b></a><a href={`${base}rss.xml`} class="text-link rss-link">RSS ↗</a></span>
       </div>
     </section>
     <section class="notes container" id="notes">

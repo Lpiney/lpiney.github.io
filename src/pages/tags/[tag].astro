@@ -1,0 +1,32 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Nav from '../../components/Nav.astro';
+import PostCard from '../../components/PostCard.astro';
+import { tagSlug } from '../../utils/tags';
+
+const posts = (await getCollection('posts', ({ data }) => !data.draft)).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+const tags = [...new Set(posts.flatMap((post) => post.data.tags))].sort((a, b) => a.localeCompare(b));
+
+export async function getStaticPaths() {
+  const posts = await getCollection('posts', ({ data }) => !data.draft);
+  const tags = [...new Set(posts.flatMap((post) => post.data.tags))];
+  return tags.map((tag) => ({ params: { tag: tagSlug(tag) }, props: { tag } }));
+}
+
+const { tag } = Astro.props;
+const taggedPosts = posts.filter((post) => post.data.tags.includes(tag));
+const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
+---
+
+<BaseLayout title={`${tag} · Bruce Log`} description={`Notes tagged ${tag}.`}>
+  <Nav active="archive" />
+  <main class="container page-main">
+    <a class="back-link" href={`${base}archive/`}><span>←</span> <span class="zh-only">返回归档</span><span class="en-only">Archive</span></a>
+    <p class="eyebrow">03 / TOPIC</p>
+    <h1 class="page-title"><span class="zh-only">主题：<strong>{tag}</strong></span><span class="en-only">Topic: <strong>{tag}</strong></span></h1>
+    <p class="page-lede"><span class="zh-only">{taggedPosts.length} 篇关于这个主题的记录。</span><span class="en-only">{taggedPosts.length} notes filed under this topic.</span></p>
+    <div class="topic-tags" aria-label="Topics">{tags.map((item) => <a class:list={[{ active: item === tag }]} href={`${base}tags/${tagSlug(item)}/`}>{item}</a>)}</div>
+    <div class="post-list archive-list">{taggedPosts.map((post, index) => <PostCard {post} {index} />)}</div>
+  </main>
+</BaseLayout>

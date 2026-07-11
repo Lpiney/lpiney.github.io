@@ -1,0 +1,30 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Nav from '../components/Nav.astro';
+
+const posts = (await getCollection('posts', ({ data }) => !data.draft)).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+const totalWords = posts.reduce((total, post) => total + post.body.replace(/\s/g, '').length, 0);
+const tagCounts = [...posts.flatMap((post) => post.data.tags).reduce((counts, tag) => counts.set(tag, (counts.get(tag) || 0) + 1), new Map<string, number>())].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]));
+const yearCounts = [...posts.reduce((counts, post) => { const year = post.data.date.getFullYear(); counts.set(year, (counts.get(year) || 0) + 1); return counts; }, new Map<number, number>())].sort((a, b) => b[0] - a[0]);
+const maxTagCount = Math.max(...tagCounts.map(([, count]) => count), 1);
+---
+
+<BaseLayout title="Signals · Bruce Log" description="Writing and topic statistics for Bruce Log.">
+  <Nav active="lab" />
+  <main class="container page-main stats-page">
+    <p class="eyebrow">05 / SIGNALS</p>
+    <h1 class="page-title"><span class="zh-only">写作<strong>信号</strong></span><span class="en-only">Writing <strong>signals</strong></span></h1>
+    <p class="page-lede"><span class="zh-only">这个终端至今留下的记录。</span><span class="en-only">What this terminal has recorded so far.</span></p>
+    <section class="metric-grid" aria-label="Writing metrics">
+      <div><b>{String(posts.length).padStart(2, '0')}</b><span class="zh-only">已发布文章</span><span class="en-only">published notes</span></div>
+      <div><b>{String(tagCounts.length).padStart(2, '0')}</b><span class="zh-only">探索主题</span><span class="en-only">topics explored</span></div>
+      <div><b>{(totalWords / 1000).toFixed(1)}k</b><span class="zh-only">累计字符数*</span><span class="en-only">characters written*</span></div>
+    </section>
+    <div class="stats-grid">
+      <section><div class="section-title"><p class="eyebrow"><span class="zh-only">主题分布</span><span class="en-only">Topic distribution</span></p></div><div class="bar-list">{tagCounts.map(([tag, count]) => <div><span>{tag}</span><i><b style={`width: ${(count / maxTagCount) * 100}%`}></b></i><em>{count}</em></div>)}</div></section>
+      <section><div class="section-title"><p class="eyebrow"><span class="zh-only">年度记录</span><span class="en-only">Yearly notes</span></p></div><div class="year-list">{yearCounts.map(([year, count]) => <div><b>{year}</b><span>{String(count).padStart(2, '0')} NOTES</span></div>)}</div></section>
+    </div>
+    <p class="stats-note"><span class="zh-only">* 以 Markdown 正文去除空白后的字符数估算。</span><span class="en-only">* Estimated from non-whitespace Markdown body characters.</span></p>
+  </main>
+</BaseLayout>

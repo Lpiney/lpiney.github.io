@@ -1,0 +1,26 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Nav from '../components/Nav.astro';
+
+const projects = (await getCollection('projects')).sort((a, b) => b.data.started.valueOf() - a.data.started.valueOf());
+const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
+---
+
+<BaseLayout title="Lab · Bruce Log" description="Projects, experiments, and ongoing field work from Bruce Log.">
+  <Nav active="lab" />
+  <main class="container page-main">
+    <p class="eyebrow">04 / LAB</p>
+    <h1 class="page-title"><span class="zh-only">正在运行的<strong>实验</strong></span><span class="en-only">Work in <strong>progress</strong></span></h1>
+    <p class="page-lede"><span class="zh-only">项目、实验与正在成形的想法。</span><span class="en-only">Projects, experiments, and ideas still taking shape.</span></p>
+    <div class="lab-grid">
+      {projects.map((project, index) => <article class="lab-card" style={`--delay: ${index * 90}ms`}>
+        <div class="lab-card-top"><span>{project.data.category}</span><b>{project.data.status}</b></div>
+        <h2>{project.data.title}</h2>
+        <p class="zh-only">{project.data.summaryZh}</p><p class="en-only">{project.data.summaryEn}</p>
+        <footer><time datetime={project.data.started.toISOString()}>{project.data.started.getFullYear()}</time>{project.data.link && <a href={project.data.link} target="_blank" rel="noopener">SOURCE ↗</a>}</footer>
+      </article>)}
+    </div>
+    <a class="stats-link" href={`${base}stats/`}><span class="zh-only">查看写作信号统计</span><span class="en-only">View writing signals</span> ↗</a>
+  </main>
+</BaseLayout>

@@ -1,5 +1,6 @@
 ---
 import type { CollectionEntry } from 'astro:content';
+import { tagSlug } from '../utils/tags';
 const { post, index = 0 } = Astro.props as { post: CollectionEntry<'posts'>; index?: number };
 const date = post.data.date.toLocaleDateString('zh-CN', { year: 'numeric', month: 'short', day: 'numeric' });
 const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
@@ -12,7 +13,8 @@ const readingMinutes = Math.max(1, Math.ceil(post.body.replace(/\s/g, '').length
     <div class="eyebrow"><time datetime={post.data.date.toISOString()}>{date}</time><span>•</span><span>{post.data.tags[0] || 'FIELD NOTE'}</span><span>•</span><span>{readingMinutes} MIN</span></div>
     <h2><a href={`${base}posts/${post.id}/`}>{post.data.title}</a></h2>
     {post.data.subtitle && <p>{post.data.subtitle}</p>}
-    <div class="post-card-footer"><div class="tag-row">{post.data.tags.map((tag) => <span>{tag}</span>)}</div><span class="read-label"><span class="zh-only">阅读记录</span><span class="en-only">Open note</span></span></div>
+    <div class="post-card-footer"><div class="tag-row">{post.data.tags.map((tag) => <a href={`${base}tags/${tagSlug(tag)}/`}>{tag}</a>)}</div><span class="read-label"><span class="zh-only">阅读记录</span><span class="en-only">Open note</span></span></div>
   </div>
+  <div class="post-cover" aria-hidden="true"><img src={`${base}og/${post.id}.svg`} alt="" loading="lazy" /></div>
   <a class="post-arrow" href={`${base}posts/${post.id}/`} aria-label={`Read ${post.data.title}`}>↗</a>
 </article>

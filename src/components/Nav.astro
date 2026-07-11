@@ -1,6 +1,8 @@
 ---
+import { getCollection } from 'astro:content';
 const { active = 'home' } = Astro.props;
 const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
+const randomPosts = (await getCollection('posts', ({ data }) => !data.draft)).map((post) => `${base}posts/${post.id}/`);
 ---
 
 <header class="nav-shell">
@@ -9,8 +11,19 @@ const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL :
     <div class="nav-links">
       <a class:list={[{ active: active === 'home' }]} href={base}><span class="zh-only">首页</span><span class="en-only">Home</span></a>
       <a class:list={[{ active: active === 'archive' }]} href={`${base}archive/`}><span class="zh-only">归档</span><span class="en-only">Archive</span></a>
+      <a class:list={[{ active: active === 'lab' }]} href={`${base}lab/`}><span class="zh-only">实验室</span><span class="en-only">Lab</span></a>
       <a class:list={[{ active: active === 'about' }]} href={`${base}about/`}><span class="zh-only">关于</span><span class="en-only">About</span></a>
     </div>
+    <button class="random-note" type="button" data-random-posts={JSON.stringify(randomPosts)} aria-label="Open a random note" title="Random note">✦</button>
     <button class="language-toggle" type="button" data-language-toggle aria-label="Switch language"><span data-language-label>EN</span></button>
   </nav>
 </header>
+<script>
+  document.querySelectorAll<HTMLButtonElement>('[data-random-posts]').forEach((button) => {
+    button.addEventListener('click', () => {
+      const posts: string[] = JSON.parse(button.dataset.randomPosts || '[]');
+      const destination = posts[Math.floor(Math.random() * posts.length)];
+      if (destination) window.location.assign(destination);
+    });
+  });
+</script>
