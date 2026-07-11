@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 650" role="img" aria-labelledby="title desc">
+  <title id="title">SpaceX system map</title>
+  <desc id="desc">A conceptual map showing launch services, Dragon, Starlink, Starship, infrastructure and regulation as connected parts of one operating system.</desc>
+  <defs>
+    <linearGradient id="space" x1="0" x2="1" y1="0" y2="1"><stop stop-color="#0c1017"/><stop offset="1" stop-color="#17131f"/></linearGradient>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#98dbe2"/></marker>
+  </defs>
+  <rect width="1200" height="650" rx="28" fill="url(#space)"/>
+  <g opacity=".13" stroke="#c9eff1"><path d="M0 108H1200M0 216H1200M0 324H1200M0 432H1200M0 540H1200"/><path d="M120 0V650M300 0V650M480 0V650M660 0V650M840 0V650M1020 0V650"/></g>
+  <text x="60" y="70" fill="#e8eeee" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="19" letter-spacing="5">ONE COMPANY, MANY FEEDBACK LOOPS</text>
+  <text x="60" y="102" fill="#9aa8aa" font-family="Georgia, serif" font-size="20">The visible rocket is only one layer of the system.</text>
+  <g fill="none" stroke="#98dbe2" stroke-width="3" marker-end="url(#arrow)">
+    <path d="M330 237H456"/><path d="M690 237H820"/><path d="M946 290V385"/><path d="M820 448H690"/><path d="M456 448H330"/><path d="M210 385V290"/>
+    <path d="M324 237 C464 152 742 154 878 236" stroke="#f0443b"/>
+    <path d="M560 482V548" stroke="#f0443b"/>
+  </g>
+  <g stroke-width="2">
+    <rect x="92" y="182" width="220" height="110" rx="18" fill="#121a22" stroke="#98dbe2"/><rect x="458" y="182" width="220" height="110" rx="18" fill="#121a22" stroke="#98dbe2"/><rect x="834" y="182" width="220" height="110" rx="18" fill="#121a22" stroke="#98dbe2"/>
+    <rect x="92" y="393" width="220" height="110" rx="18" fill="#121a22" stroke="#98dbe2"/><rect x="458" y="393" width="220" height="110" rx="18" fill="#121a22" stroke="#98dbe2"/><rect x="834" y="393" width="220" height="110" rx="18" fill="#121a22" stroke="#98dbe2"/>
+    <rect x="385" y="548" width="430" height="58" rx="29" fill="#f0443b" stroke="#f0443b"/>
+  </g>
+  <g text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, monospace">
+    <g fill="#eefafa" font-size="18" letter-spacing="2"><text x="202" y="226">LAUNCH SERVICES</text><text x="568" y="226">DRAGON</text><text x="944" y="226">STARLINK</text><text x="202" y="437">FACTORY + SOFTWARE</text><text x="568" y="437">STARSHIP</text><text x="944" y="437">CUSTOMERS + MISSIONS</text></g>
+    <g fill="#9aa8aa" font-size="13"><text x="202" y="254">FLIGHT CADENCE</text><text x="568" y="254">CREW + CARGO</text><text x="944" y="254">INTERNAL DEMAND</text><text x="202" y="465">BUILD / TEST / LEARN</text><text x="568" y="465">FUTURE CAPACITY</text><text x="944" y="465">REVENUE + REQUIREMENTS</text></g>
+    <text x="600" y="584" fill="white" font-size="15" letter-spacing="2">INFRASTRUCTURE · SAFETY · REGULATION · ENVIRONMENT</text>
+  </g>
+</svg>

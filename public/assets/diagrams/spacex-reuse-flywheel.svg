@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 680" role="img" aria-labelledby="title desc">
+  <title id="title">Reusable launch flywheel diagram</title>
+  <desc id="desc">A conceptual loop connecting manufacture, launch, recovery, inspection and reflight, with customer demand reinforcing the loop.</desc>
+  <defs>
+    <linearGradient id="space" x1="0" x2="1" y1="0" y2="1"><stop stop-color="#0d1018"/><stop offset="1" stop-color="#171321"/></linearGradient>
+    <filter id="glow"><feGaussianBlur stdDeviation="7" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#9fdbe1"/></marker>
+  </defs>
+  <rect width="1200" height="680" rx="28" fill="url(#space)"/>
+  <g opacity=".16" stroke="#c9eff1"><path d="M0 92H1200M0 190H1200M0 288H1200M0 386H1200M0 484H1200M0 582H1200"/><path d="M100 0V680M250 0V680M400 0V680M550 0V680M700 0V680M850 0V680M1000 0V680M1150 0V680"/></g>
+  <text x="64" y="76" fill="#e8eeee" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="19" letter-spacing="5">THE REUSE FLYWHEEL</text>
+  <text x="64" y="108" fill="#9aa8aa" font-family="Georgia, serif" font-size="20">A launch vehicle becomes an operating system only when the loop can close.</text>
+  <g fill="none" stroke="#9fdbe1" stroke-width="4" marker-end="url(#arrow)">
+    <path d="M326 252 C446 140 643 136 760 240"/>
+    <path d="M850 302 C930 400 871 514 746 530"/>
+    <path d="M640 563 C475 620 312 552 281 421"/>
+    <path d="M250 330 C223 292 248 263 290 246"/>
+  </g>
+  <g fill="#111820" stroke="#9fdbe1" stroke-width="2">
+    <circle cx="275" cy="330" r="84"/><circle cx="790" cy="270" r="84"/><circle cx="780" cy="535" r="84"/><circle cx="385" cy="530" r="84"/>
+  </g>
+  <g fill="#effafa" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="18" letter-spacing="2">
+    <text x="275" y="323">MANUFACTURE</text><text x="275" y="349" fill="#9aa8aa" font-size="13">STANDARD HARDWARE</text>
+    <text x="790" y="263">LAUNCH</text><text x="790" y="289" fill="#9aa8aa" font-size="13">MISSION DATA</text>
+    <text x="780" y="528">RECOVER</text><text x="780" y="554" fill="#9aa8aa" font-size="13">RETURN + TRANSPORT</text>
+    <text x="385" y="523">INSPECT / LEARN</text><text x="385" y="549" fill="#9aa8aa" font-size="13">REFURBISH + UPDATE</text>
+  </g>
+  <circle cx="560" cy="380" r="116" fill="#f0443b" opacity=".12" filter="url(#glow)"/>
+  <circle cx="560" cy="380" r="91" fill="#12131a" stroke="#f0443b" stroke-width="2"/>
+  <text x="560" y="371" fill="#fff5f1" text-anchor="middle" font-family="Georgia, serif" font-size="24">LOWER MARGINAL</text>
+  <text x="560" y="403" fill="#fff5f1" text-anchor="middle" font-family="Georgia, serif" font-size="24">COST + FASTER TURNAROUND</text>
+  <path d="M562 520 V600" stroke="#f0443b" stroke-width="3" marker-end="url(#arrow)"/>
+  <rect x="324" y="608" width="476" height="45" rx="22" fill="#f0443b"/>
+  <text x="562" y="637" fill="white" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="14" letter-spacing="2">COMMERCIAL + GOVERNMENT + STARLINK DEMAND</text>
+</svg>

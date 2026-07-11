@@ -1,6 +1,8 @@
 ---
 const profileUrl = 'https://steamcommunity.com/id/bruceL1/';
 const avatarUrl = 'https://avatars.fastly.steamstatic.com/b724babfb1379eb4dccac79d11c60439a0d0e01b_full.jpg';
+const cs2Url = 'https://steamcommunity.com/app/730';
+const cs2Capsule = 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/730/942c04efaa5bc87afb6f2a97dbf17ac614c8a84d/capsule_184x69.jpg?t=1780435263';
 ---
 
 <section class="steam-profile" aria-labelledby="steam-profile-title">
@@ -13,6 +15,19 @@ const avatarUrl = 'https://avatars.fastly.steamstatic.com/b724babfb1379eb4dccac7
       <p class="steam-summary"><span class="zh-only">踏上重返宇宙的旅程。</span><span class="en-only">Embark on a journey back to the cosmos.</span></p>
     </div>
     <div class="steam-level"><b>32</b><span><span class="zh-only">STEAM 等级</span><span class="en-only">STEAM LEVEL</span></span></div>
+  </div>
+  <div class="steam-showcase" aria-label="Steam public game showcase">
+    <div class="steam-showcase-heading"><span>GAME LOG / PUBLIC SHOWCASE</span><span class="zh-only">公开资料同步</span><span class="en-only">PUBLIC PROFILE SYNC</span></div>
+    <div class="steam-game-feature">
+      <a href={cs2Url} target="_blank" rel="noopener"><img src={cs2Capsule} alt="Counter-Strike 2" loading="lazy" /></a>
+      <div class="steam-game-copy"><p class="eyebrow">FAVORITE GAME</p><h3>Counter-Strike 2</h3><p><span class="zh-only">公开展示中最常游玩的游戏。</span><span class="en-only">Most-played game shown on the public profile.</span></p></div>
+      <div class="steam-hours"><b>1,379</b><span><span class="zh-only">小时游玩</span><span class="en-only">HOURS PLAYED</span></span></div>
+    </div>
+    <div class="steam-stat-grid">
+      <div><b>4,142</b><span><span class="zh-only">成就</span><span class="en-only">ACHIEVEMENTS</span></span></div>
+      <div><b>11</b><span><span class="zh-only">完美游戏</span><span class="en-only">PERFECT GAMES</span></span></div>
+      <div><b>52%</b><span><span class="zh-only">平均完成率</span><span class="en-only">AVG. COMPLETION</span></span></div>
+    </div>
   </div>
   <div class="steam-profile-footer"><span><i></i><span class="zh-only">公开档案 · 在线</span><span class="en-only">PUBLIC PROFILE · ONLINE</span></span><a href={profileUrl} target="_blank" rel="noopener"><span class="zh-only">打开 Steam 档案</span><span class="en-only">Open Steam profile</span> ↗</a></div>
 </section>
