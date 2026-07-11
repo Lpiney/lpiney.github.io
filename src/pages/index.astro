@@ -12,18 +12,20 @@ const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL :
   <Nav active="home" />
   <main>
     <section class="hero container">
-      <div class="hero-kicker"><span class="pulse"></span><span class="zh-only">任务控制中心 · 在线</span><span class="en-only">Mission control · online</span></div>
-      <p class="hero-index">MISSION 01 / ONGOING</p>
-      <h1><span class="zh-only">离开世界之前<br />一切都是<strong>过程</strong></span><span class="en-only">Before leaving this world,<br />everything is <strong>in progress.</strong></span></h1>
+      <div class="hero-copy">
+        <div class="hero-kicker"><span class="pulse"></span><span class="zh-only">任务控制中心 · 在线</span><span class="en-only">Mission control · online</span></div>
+        <p class="hero-index">MISSION 01 / ONGOING</p>
+        <h1><span class="zh-only">离开世界之前<br />一切都是<strong>过程</strong></span><span class="en-only">Before leaving this world,<br />everything is <strong>in progress.</strong></span></h1>
+        <div class="hero-footer">
+          <p class="zh-only">关于机器人、独立游戏与那些值得反复思考的科技。</p>
+          <p class="en-only">Notes on robots, indie games, and technology worth thinking about twice.</p>
+          <span class="hero-actions"><a href="#notes" class="text-link"><span class="zh-only">浏览文章</span><span class="en-only">Browse notes</span> <b>↓</b></a><a href={`${base}rss.xml`} class="text-link rss-link">RSS ↗</a></span>
+        </div>
+      </div>
       <div class="hero-visual" aria-hidden="true">
         <span class="orbit orbit-a"></span><span class="orbit orbit-b"></span><span class="orbit orbit-c"></span><span class="orbit-dot"></span>
         <div class="signal-core"><small>BRUCE / ∞</small><b>∞</b><i>COSMIC ARCHIVE</i></div>
         <div class="signal-caption"><span>STATUS: CURIOUS</span><span>LOG / ∞</span></div>
-      </div>
-      <div class="hero-footer">
-        <p class="zh-only">关于机器人、独立游戏与那些值得反复思考的科技。</p>
-        <p class="en-only">Notes on robots, indie games, and technology worth thinking about twice.</p>
-        <span class="hero-actions"><a href="#notes" class="text-link"><span class="zh-only">浏览文章</span><span class="en-only">Browse notes</span> <b>↓</b></a><a href={`${base}rss.xml`} class="text-link rss-link">RSS ↗</a></span>
       </div>
     </section>
     <section class="notes container" id="notes">
