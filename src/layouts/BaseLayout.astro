@@ -28,7 +28,7 @@ const structuredData = {
 ---
 
 <!doctype html>
-<html lang="zh-CN" data-lang="zh">
+<html lang="zh-CN" data-lang="zh" data-theme="light">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -56,6 +56,29 @@ const structuredData = {
     <button class="to-top" type="button" data-to-top aria-label="Back to top">↑</button>
     <script is:inline>
       const key = 'bruce-language';
+      const applyGiscusTheme = (theme) => {
+        document.querySelectorAll('.giscus-frame').forEach((frame) => {
+          frame.contentWindow?.postMessage({ giscus: { setConfig: { theme } } }, 'https://giscus.app');
+        });
+      };
+      const setThemeFromLocalTime = () => {
+        const hour = new Date().getHours();
+        const theme = hour >= 19 || hour < 7 ? 'dark' : 'light';
+        document.documentElement.dataset.theme = theme;
+        document.querySelector('meta[name="theme-color"]')?.setAttribute('content', theme === 'dark' ? '#121212' : '#f7f7f4');
+        applyGiscusTheme(theme === 'dark' ? 'dark' : 'light');
+      };
+      const setCosmicMark = () => {
+        const marks = [
+          { icon: '∞', label: 'INFINITY' },
+          { icon: '♊', label: 'GEMINI' },
+          { icon: '✦', label: 'ORION' },
+          { icon: '✧', label: 'ANDROMEDA' },
+        ];
+        const mark = marks[new Date().getDate() % marks.length];
+        document.querySelectorAll('[data-cosmic-icon]').forEach((node) => { node.textContent = mark.icon; });
+        document.querySelectorAll('[data-cosmic-label]').forEach((node) => { node.textContent = mark.label; });
+      };
       const setLanguage = (language) => {
         document.documentElement.dataset.lang = language;
         document.documentElement.lang = language === 'zh' ? 'zh-CN' : 'en';
@@ -65,6 +88,16 @@ const structuredData = {
         });
       };
       setLanguage(localStorage.getItem(key) || 'zh');
+      setThemeFromLocalTime();
+      setCosmicMark();
+      window.setInterval(setThemeFromLocalTime, 60_000);
+      const giscusObserver = new MutationObserver(() => {
+        if (document.querySelector('.giscus-frame')) {
+          applyGiscusTheme(document.documentElement.dataset.theme === 'dark' ? 'dark' : 'light');
+          giscusObserver.disconnect();
+        }
+      });
+      giscusObserver.observe(document.body, { childList: true, subtree: true });
       document.querySelectorAll('[data-language-toggle]').forEach((button) => {
         button.addEventListener('click', () => {
           setLanguage(document.documentElement.dataset.lang === 'zh' ? 'en' : 'zh');
