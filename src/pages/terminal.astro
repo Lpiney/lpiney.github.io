@@ -1,0 +1,42 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Nav from '../components/Nav.astro';
+import Giscus from '../components/Giscus.astro';
+---
+
+<BaseLayout title="Terminal · Bruce Log" description="Live site status, visitor signals, and the Bruce Log guestbook.">
+  <Nav active="terminal" />
+  <main class="container page-main terminal-page">
+    <p class="eyebrow">06 / TERMINAL</p>
+    <h1 class="page-title"><span class="zh-only">任务<strong>终端</strong></span><span class="en-only">Mission <strong>terminal</strong></span></h1>
+    <p class="page-lede"><span class="zh-only">网站运行信号、访问记录与公开留言。</span><span class="en-only">Site signals, visitor records, and an open guestbook.</span></p>
+    <section class="terminal-panel" aria-label="Site status">
+      <div class="terminal-panel-head"><span><i></i> SYSTEM / NOMINAL</span><span>BRUCE.LOG</span></div>
+      <div class="terminal-metrics">
+        <div><span class="terminal-label"><span class="zh-only">持续运行</span><span class="en-only">Time online</span></span><b data-site-uptime>CALCULATING…</b><small>STARTED 2024.05.19</small></div>
+        <div><span class="terminal-label"><span class="zh-only">总访问量</span><span class="en-only">Total visits</span></span><b id="busuanzi_value_site_pv">—</b><small>PAGE VIEWS</small></div>
+        <div><span class="terminal-label"><span class="zh-only">访客数量</span><span class="en-only">Visitors</span></span><b id="busuanzi_value_site_uv">—</b><small>UNIQUE VISITORS</small></div>
+      </div>
+      <p class="terminal-note"><span class="zh-only">访问统计由不蒜子提供；计数服务不可用时会显示破折号。</span><span class="en-only">Visit counters are supplied by Busuanzi and show a dash when unavailable.</span></p>
+    </section>
+    <section class="guestbook">
+      <div class="section-title"><p class="eyebrow"><span class="zh-only">GitHub 留言</span><span class="en-only">GitHub guestbook</span></p><span>GISCUS / ONLINE</span></div>
+      <p><span class="zh-only">使用 GitHub 账号登录后即可留言、回复和添加反应。</span><span class="en-only">Sign in with GitHub to leave a note, reply, or add reactions.</span></p>
+      <Giscus />
+    </section>
+  </main>
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  <script>
+    const startedAt = Date.UTC(2024, 4, 19);
+    const uptime = document.querySelector('[data-site-uptime]');
+    const updateUptime = () => {
+      const elapsed = Math.max(0, Date.now() - startedAt);
+      const days = Math.floor(elapsed / 86_400_000);
+      const hours = Math.floor((elapsed % 86_400_000) / 3_600_000);
+      const minutes = Math.floor((elapsed % 3_600_000) / 60_000);
+      if (uptime) uptime.textContent = `${days}D ${String(hours).padStart(2, '0')}H ${String(minutes).padStart(2, '0')}M`;
+    };
+    updateUptime();
+    window.setInterval(updateUptime, 60_000);
+  </script>
+</BaseLayout>

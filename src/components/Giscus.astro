@@ -1,8 +1,8 @@
 ---
-const repo = import.meta.env.PUBLIC_GISCUS_REPO;
-const repoId = import.meta.env.PUBLIC_GISCUS_REPO_ID;
+const repo = import.meta.env.PUBLIC_GISCUS_REPO || 'Lpiney/lpiney.github.io';
+const repoId = import.meta.env.PUBLIC_GISCUS_REPO_ID || 'R_kgDOL9hD8w';
 const category = import.meta.env.PUBLIC_GISCUS_CATEGORY || 'Announcements';
-const categoryId = import.meta.env.PUBLIC_GISCUS_CATEGORY_ID;
+const categoryId = import.meta.env.PUBLIC_GISCUS_CATEGORY_ID || 'DIC_kwDOL9hD884C0qni';
 const enabled = repo && repoId && categoryId;
 ---
 

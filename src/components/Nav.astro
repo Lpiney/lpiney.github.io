@@ -12,6 +12,7 @@ const randomPosts = (await getCollection('posts', ({ data }) => !data.draft)).ma
       <a class:list={[{ active: active === 'home' }]} href={base}><span class="zh-only">首页</span><span class="en-only">Home</span></a>
       <a class:list={[{ active: active === 'archive' }]} href={`${base}archive/`}><span class="zh-only">归档</span><span class="en-only">Archive</span></a>
       <a class:list={[{ active: active === 'lab' }]} href={`${base}lab/`}><span class="zh-only">实验室</span><span class="en-only">Lab</span></a>
+      <a class:list={[{ active: active === 'terminal' }]} href={`${base}terminal/`}><span class="zh-only">终端</span><span class="en-only">Terminal</span></a>
       <a class:list={[{ active: active === 'about' }]} href={`${base}about/`}><span class="zh-only">关于</span><span class="en-only">About</span></a>
     </div>
     <button class="random-note" type="button" data-random-posts={JSON.stringify(randomPosts)} aria-label="Open a random note" title="Random note">✦</button>
