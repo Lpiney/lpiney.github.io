@@ -13,13 +13,14 @@ const { post } = Astro.props;
 const { Content } = await render(post);
 const date = post.data.date.toLocaleDateString('zh-CN', { year: 'numeric', month: 'long', day: 'numeric' });
 const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
+const readingMinutes = Math.max(1, Math.ceil(post.body.replace(/\s/g, '').length / 550));
 ---
 <BaseLayout title={`${post.data.title} · Bruce Log`} description={post.data.subtitle || post.data.title}>
   <Nav />
   <main class="container article-shell">
     <a class="back-link" href={`${base}archive/`}><span>←</span> <span class="zh-only">返回归档</span><span class="en-only">Archive</span></a>
     <header class="article-header">
-      <p class="eyebrow"><time datetime={post.data.date.toISOString()}>{date}</time> · {post.data.author}</p>
+      <p class="eyebrow"><time datetime={post.data.date.toISOString()}>{date}</time> · {post.data.author} · {readingMinutes} MIN READ</p>
       <h1>{post.data.title}</h1>
       {post.data.subtitle && <p class="article-subtitle">{post.data.subtitle}</p>}
       <div class="tag-row">{post.data.tags.map((tag) => <span>{tag}</span>)}</div>

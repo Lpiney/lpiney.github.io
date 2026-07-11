@@ -5,6 +5,7 @@ import Nav from '../components/Nav.astro';
 import PostCard from '../components/PostCard.astro';
 
 const posts = (await getCollection('posts', ({ data }) => !data.draft)).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
 ---
 
 <BaseLayout>
@@ -14,6 +15,11 @@ const posts = (await getCollection('posts', ({ data }) => !data.draft)).sort((a,
       <div class="hero-kicker"><span class="pulse"></span><span class="zh-only">个人知识终端 · 在线</span><span class="en-only">Personal knowledge terminal · online</span></div>
       <p class="hero-index">01—∞</p>
       <h1><span class="zh-only">离开世界之前<br />一切都是<strong>过程</strong></span><span class="en-only">Before leaving this world,<br />everything is <strong>in progress.</strong></span></h1>
+      <div class="hero-visual" aria-hidden="true">
+        <span class="orbit orbit-a"></span><span class="orbit orbit-b"></span><span class="orbit-dot"></span>
+        <div class="signal-core"><small>BRUCE / 01</small><b>∞</b><i>FIELD NOTES</i></div>
+        <div class="signal-caption"><span>STATUS: CURIOUS</span><span>2026.05.30</span></div>
+      </div>
       <div class="hero-footer">
         <p class="zh-only">关于机器人、独立游戏与那些值得反复思考的科技。</p>
         <p class="en-only">Notes on robots, indie games, and technology worth thinking about twice.</p>
@@ -21,7 +27,7 @@ const posts = (await getCollection('posts', ({ data }) => !data.draft)).sort((a,
       </div>
     </section>
     <section class="notes container" id="notes">
-      <div class="section-title"><p class="eyebrow"><span class="zh-only">最新信号</span><span class="en-only">Latest signals</span></p><span>{String(posts.length).padStart(2, '0')} NOTES</span></div>
+      <div class="section-title"><p class="eyebrow"><span class="zh-only">最新信号</span><span class="en-only">Latest signals</span></p><a href={`${base}archive/`}><span>{String(posts.length).padStart(2, '0')} NOTES</span><b>↗</b></a></div>
       <div class="post-list">{posts.map((post, index) => <PostCard {post} {index} />)}</div>
     </section>
   </main>

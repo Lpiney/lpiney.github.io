@@ -23,7 +23,9 @@ const {
     <title>{title}</title>
   </head>
   <body>
+    <div class="scroll-progress" aria-hidden="true"><span data-scroll-progress></span></div>
     <slot />
+    <button class="to-top" type="button" data-to-top aria-label="Back to top">↑</button>
     <script is:inline>
       const key = 'bruce-language';
       const setLanguage = (language) => {
@@ -40,6 +42,17 @@ const {
           setLanguage(document.documentElement.dataset.lang === 'zh' ? 'en' : 'zh');
         });
       });
+      const progress = document.querySelector('[data-scroll-progress]');
+      const toTop = document.querySelector('[data-to-top]');
+      const updateScrollUI = () => {
+        const max = document.documentElement.scrollHeight - window.innerHeight;
+        const ratio = max > 0 ? window.scrollY / max : 0;
+        progress.style.transform = `scaleX(${ratio})`;
+        toTop.classList.toggle('is-visible', window.scrollY > 520);
+      };
+      window.addEventListener('scroll', updateScrollUI, { passive: true });
+      toTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+      updateScrollUI();
     </script>
   </body>
 </html>
