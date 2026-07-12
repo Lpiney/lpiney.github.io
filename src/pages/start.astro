@@ -3,6 +3,7 @@ import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Nav from '../components/Nav.astro';
 import PostCard from '../components/PostCard.astro';
+import { featuredReading } from '../data/featured-reading';
 
 const posts = await getCollection('posts', ({ data }) => !data.draft);
 const byId = new Map(posts.map((post) => [post.id, post]));
@@ -28,6 +29,17 @@ const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL :
     <section class="start-reading" aria-labelledby="start-reading-title">
       <div class="section-title"><p class="eyebrow" id="start-reading-title"><span class="zh-only">先读这三篇</span><span class="en-only">Read these first</span></p><a href={`${base}archive/`}><span class="zh-only">所有记录</span><span class="en-only">All notes</span><b>↗</b></a></div>
       <div class="post-list">{picked.map((post, index) => <PostCard {post} {index} />)}</div>
+    </section>
+
+    <section class="featured-reading" aria-labelledby="featured-reading-title">
+      <div class="section-title"><p class="eyebrow" id="featured-reading-title"><span class="zh-only">精选文章</span><span class="en-only">Selected reading</span></p><span>{String(featuredReading.length).padStart(2, '0')} LINKS</span></div>
+      <div class="featured-reading-list">
+        {featuredReading.map((article, index) => <a class="featured-reading-card" href={article.url} target="_blank" rel="noopener noreferrer">
+          <span class="featured-reading-number">{String(index + 1).padStart(2, '0')}</span>
+          <div><p class="eyebrow">{article.source}</p><h2>{article.title}</h2><p><span class="zh-only">{article.summaryZh}</span><span class="en-only">{article.summaryEn}</span></p><div class="tag-row">{article.topics.map((topic) => <span>{topic}</span>)}</div></div>
+          <span class="featured-reading-arrow" aria-hidden="true">↗</span>
+        </a>)}
+      </div>
     </section>
 
     <section class="column-notes" aria-label="Column guide">
