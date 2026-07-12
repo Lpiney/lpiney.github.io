@@ -30,6 +30,10 @@ const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL :
         <div class="signal-caption"><span>STATUS: CURIOUS</span><span>LOG / <span data-cosmic-label>INFINITY</span></span></div>
       </div>
     </section>
+    <section class="home-start container" aria-labelledby="home-start-title">
+      <div><p class="eyebrow">START HERE</p><h2 id="home-start-title"><span class="zh-only">三条正在展开的轨道</span><span class="en-only">Three expanding orbits</span></h2><p><span class="zh-only">宇宙、AI、游戏与叙事：从这里选择一条线索，进入完整的个人档案。</span><span class="en-only">Space, AI, games, and stories: choose a thread into the whole personal archive.</span></p></div>
+      <a class="home-start-link" href={`${base}start/`}><span class="zh-only">从这里开始</span><span class="en-only">Start here</span> <b>↗</b></a>
+    </section>
     <section class="notes container" id="notes">
       <div class="section-title"><p class="eyebrow"><span class="zh-only">最新信号</span><span class="en-only">Latest signals</span></p><a href={`${base}archive/`}><span>{String(posts.length).padStart(2, '0')} NOTES</span><b>↗</b></a></div>
       <div class="post-list">{posts.map((post, index) => <PostCard {post} {index} />)}</div>

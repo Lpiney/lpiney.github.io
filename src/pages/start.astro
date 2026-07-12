@@ -1,0 +1,40 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Nav from '../components/Nav.astro';
+import PostCard from '../components/PostCard.astro';
+
+const posts = await getCollection('posts', ({ data }) => !data.draft);
+const byId = new Map(posts.map((post) => [post.id, post]));
+const picked = ['2026-07-11-spacex-cosmic-archive', '2026-05-30-AI-hallucination', '2026-01-02-murder-drones']
+  .map((id) => byId.get(id))
+  .filter((post): post is NonNullable<typeof post> => Boolean(post));
+const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
+---
+
+<BaseLayout title="Start Here · Bruce Log">
+  <Nav active="start" />
+  <main class="container page-main start-page">
+    <p class="eyebrow">00 / START HERE</p>
+    <h1 class="page-title"><span class="zh-only">从这里，进入我的<strong>宇宙</strong></span><span class="en-only">A way into my <strong>archive</strong></span></h1>
+    <p class="page-lede"><span class="zh-only">如果这是你第一次来到这里，先从三条持续展开的轨道开始：宇宙、AI，与游戏和叙事。</span><span class="en-only">If this is your first visit, begin with three ongoing orbits: space, AI, and games with stories.</span></p>
+
+    <section class="topic-orbits" aria-label="Long-term columns">
+      <a class="topic-orbit topic-orbit-space" href="#space"><span class="topic-orbit-mark">✦</span><p>ORBIT 01</p><h2><span class="zh-only">宇宙档案</span><span class="en-only">Cosmic archive</span></h2><span class="zh-only">火箭、轨道与长期主义。</span><span class="en-only">Rockets, orbits, and long horizons.</span><b>↓</b></a>
+      <a class="topic-orbit topic-orbit-ai" href="#ai"><span class="topic-orbit-mark">◎</span><p>ORBIT 02</p><h2>AI / <span class="zh-only">思考实验</span><span class="en-only">Field notes</span></h2><span class="zh-only">工具、幻觉与更好的提问。</span><span class="en-only">Tools, hallucinations, better questions.</span><b>↓</b></a>
+      <a class="topic-orbit topic-orbit-play" href="#play"><span class="topic-orbit-mark">♊</span><p>ORBIT 03</p><h2><span class="zh-only">游戏与叙事</span><span class="en-only">Games & stories</span></h2><span class="zh-only">游玩、动画与想象力的记录。</span><span class="en-only">Play, animation, and imaginative worlds.</span><b>↓</b></a>
+    </section>
+
+    <section class="start-reading" aria-labelledby="start-reading-title">
+      <div class="section-title"><p class="eyebrow" id="start-reading-title"><span class="zh-only">先读这三篇</span><span class="en-only">Read these first</span></p><a href={`${base}archive/`}><span class="zh-only">所有记录</span><span class="en-only">All notes</span><b>↗</b></a></div>
+      <div class="post-list">{picked.map((post, index) => <PostCard {post} {index} />)}</div>
+    </section>
+
+    <section class="column-notes" aria-label="Column guide">
+      <article id="space"><p class="eyebrow">ORBIT 01 / SPACE</p><h2><span class="zh-only">宇宙档案</span><span class="en-only">Cosmic archive</span></h2><p><span class="zh-only">关于航天、工程系统，以及人类把边界变成问题的方式。</span><span class="en-only">Spaceflight, systems engineering, and the habit of turning limits into questions.</span></p><a href={`${base}posts/2026-07-11-spacex-cosmic-archive/`}><span class="zh-only">阅读 SpaceX 长文</span><span class="en-only">Read the SpaceX essay</span> ↗</a></article>
+      <article id="ai"><p class="eyebrow">ORBIT 02 / AI</p><h2>AI / <span class="zh-only">思考实验</span><span class="en-only">Field notes</span></h2><p><span class="zh-only">从模型幻觉出发，记录人和智能工具如何更诚实地协作。</span><span class="en-only">Starting with model hallucinations: how people and intelligent tools can collaborate more honestly.</span></p><a href={`${base}posts/2026-05-30-AI-hallucination/`}><span class="zh-only">阅读 AI 笔记</span><span class="en-only">Read the AI note</span> ↗</a></article>
+      <article id="play"><p class="eyebrow">ORBIT 03 / PLAY</p><h2><span class="zh-only">游戏与叙事</span><span class="en-only">Games & stories</span></h2><p><span class="zh-only">保存游戏、动画和复古未来主义带来的好奇心；Steam 游戏档案也会在这里持续扩展。</span><span class="en-only">A place for games, animation, retro-futurism, and an evolving Steam game log.</span></p><a href={`${base}about/`}><span class="zh-only">查看 Steam 游戏档案</span><span class="en-only">Open Steam game log</span> ↗</a></article>
+    </section>
+  </main>
+  <footer class="footer container"><span>© {new Date().getFullYear()} BRUCE LOG</span><span class="zh-only">从一篇开始，向更远处展开</span><span class="en-only">Start with one note, then follow the orbit</span></footer>
+</BaseLayout>
