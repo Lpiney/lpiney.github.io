@@ -36,7 +36,7 @@ const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL :
       <div class="featured-reading-list">
         {featuredReading.map((article, index) => <a class="featured-reading-card" href={article.url} target="_blank" rel="noopener noreferrer">
           <span class="featured-reading-number">{String(index + 1).padStart(2, '0')}</span>
-          <div><p class="eyebrow">{article.source}</p><h2>{article.title}</h2><p><span class="zh-only">{article.summaryZh}</span><span class="en-only">{article.summaryEn}</span></p><div class="tag-row">{article.topics.map((topic) => <span>{topic}</span>)}</div></div>
+          <div><p class="eyebrow">{article.source}</p><h2>{article.title}</h2><p><span class="zh-only">{article.summaryZh}</span><span class="en-only">{article.summaryEn}</span></p><div class="featured-reading-note"><b><span class="zh-only">编辑加工</span><span class="en-only">EDITOR’S NOTE</span></b><span class="zh-only">{article.editorNoteZh}</span><span class="en-only">{article.editorNoteEn}</span></div><p class="featured-reading-reader"><span class="zh-only">{article.readerZh}</span><span class="en-only">{article.readerEn}</span></p><div class="tag-row">{article.topics.map((topic) => <span>{topic}</span>)}</div></div>
           <span class="featured-reading-arrow" aria-hidden="true">↗</span>
         </a>)}
       </div>
