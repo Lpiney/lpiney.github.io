@@ -27,7 +27,7 @@ const tocHeadings = headings.filter((heading) => heading.depth === 2);
 const chineseToc = tocHeadings.filter((heading) => /[\u3400-\u9fff]/.test(heading.text));
 const englishToc = tocHeadings.filter((heading) => !/[\u3400-\u9fff]/.test(heading.text));
 ---
-<BaseLayout title={`${post.data.title} · Bruce Log`} description={post.data.subtitle || post.data.title} image={`${base}og/${post.id}.svg`} article={{ publishedTime: post.data.date.toISOString(), author: post.data.author }}>
+<BaseLayout title={`${post.data.title} · Bruce Log`} description={post.data.subtitle || post.data.title} image={`${base}og/${post.id}.png`} article={{ publishedTime: post.data.date.toISOString(), author: post.data.author }}>
   <Nav />
   <main class="container article-shell">
     <a class="back-link" href={`${base}archive/`}><span>←</span> <span class="zh-only">返回归档</span><span class="en-only">Archive</span></a>
