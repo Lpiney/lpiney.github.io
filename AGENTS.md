@@ -1,35 +1,44 @@
 # Repository Guidelines
 
-## Project Structure & Module Organization
+## Project Structure
 
-This repository is currently a minimal GitHub Pages project scaffold. The only tracked project file is `spec.md`, reserved for requirements and planning notes. Add site source at the repository root unless a future framework introduces a conventional directory such as `src/`. Keep static files in an `assets/` directory, grouped by type when the collection grows (for example, `assets/images/` and `assets/styles/`).
+Bruce Log is an Astro 7 static blog deployed to GitHub Pages. Site source lives in `src/`; long-form content is Markdown in `content/`; static public files belong in `public/`.
 
-Do not commit generated site output, editor metadata, dependency caches, or local secrets. Update this guide when tooling or a source layout is introduced.
+- `src/pages/`: route entry points, including posts, archive, terminal, and start pages.
+- `src/components/`: reusable Astro components such as navigation, cards, comments, and Steam profile.
+- `src/layouts/`: shared document layout and metadata.
+- `src/styles/global.css`: global visual system and responsive styles.
+- `src/content.config.ts`: zod schemas for posts, pages, and projects.
+- `content/posts/`, `content/pages/`, `content/projects/`: validated Markdown collections.
+- `src/data/`: small structured datasets used by pages, such as curated external reading.
+- `public/`: crawler-facing or static assets, such as `robots.txt` and diagrams.
 
-## Build, Test, and Development Commands
+Do not commit `dist/`, `node_modules/`, editor metadata, generated caches, or secrets. Keep external service identifiers configurable where practical; do not add API keys to the repository.
 
-No build system, package manifest, or automated test suite is configured yet. For now, verify Markdown and static-site edits by reviewing the changed files and using the GitHub Pages preview/deployment workflow when it is enabled.
-
-Useful repository checks:
+## Development and Verification
 
 ```sh
-git status                 # inspect intended changes
-git diff --check           # detect whitespace errors
-rg --files                 # list tracked project files
+npm ci                 # install locked dependencies
+npm run dev            # local development server
+npm run build          # production build; runs before every commit
+npx astro check        # Astro and TypeScript diagnostics
+npm run preview        # serve the generated dist/ output locally
+git diff --check       # whitespace validation
+git status --short     # verify intended changes
 ```
 
-If adding a framework, include its install, local-server, build, lint, and test commands in its README or `package.json` scripts, then update this section.
+The GitHub Actions deployment workflow builds `master` and publishes `dist/` to GitHub Pages. Validate both `npm run build` and `npx astro check` before submitting a site change.
 
-## Coding Style & Naming Conventions
+## Style and Content Conventions
 
-Use clear, descriptive lowercase filenames with hyphens, such as `about-page.md` or `site-header.css`. Prefer two spaces for HTML, CSS, YAML, and JavaScript indentation unless the chosen formatter specifies otherwise. Keep Markdown headings sequential and use fenced code blocks with a language label. Avoid introducing a formatter or linter without documenting how contributors run it.
+Use two-space indentation for Astro, TypeScript, CSS, and YAML. Prefer lowercase hyphenated filenames. Keep the existing visual direction: light/dark themes, restrained red accent, serif reading typography, and cosmic motifs used sparingly.
 
-## Testing Guidelines
+Posts use frontmatter validated by `src/content.config.ts`: `title`, optional `subtitle`, `date`, `author`, and `tags`. Maintain the current bilingual convention with `.lang-zh` and `.lang-en` blocks. Use external links responsibly: link to the canonical source and do not reproduce copyrighted articles in full.
 
-There is no test framework or coverage target. Before committing, check that links and asset paths resolve, render changed Markdown, and run `git diff --check`. Add focused tests alongside any interactive JavaScript or build configuration introduced later; name tests after the behavior they cover.
+## Accessibility and SEO
 
-## Commit & Pull Request Guidelines
+Preserve the skip link, visible keyboard focus, reduced-motion support, semantic headings, useful image alt text, and bilingual labels when editing UI. Keep canonical URL, Open Graph, Twitter, JSON-LD, and sitemap behavior intact when working in `BaseLayout.astro`.
 
-The repository has no commit history yet, so no established convention exists. Use concise imperative commit subjects, for example `Add home page layout` or `Document local preview`. Keep commits focused.
+## Commit and Pull Request Guidance
 
-Pull requests should explain the user-visible change, link relevant issues or specifications, and include screenshots for visual changes. Note any validation performed and any follow-up configuration needed for GitHub Pages.
+Use concise imperative commit subjects, for example `Add curated reading card` or `Improve theme accessibility`. Keep commits focused. For visual changes, include a short validation note and screenshots when a pull request is used.

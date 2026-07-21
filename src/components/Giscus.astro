@@ -9,7 +9,7 @@ const enabled = repo && repoId && categoryId;
 {enabled && (
   <section class="comments" aria-label="Comments">
     <p class="eyebrow"><span class="zh-only">讨论区</span><span class="en-only">Discussion</span></p>
-    <script
+    <script is:inline
       src="https://giscus.app/client.js"
       data-repo={repo}
       data-repo-id={repoId}

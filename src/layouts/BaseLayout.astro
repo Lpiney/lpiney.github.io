@@ -23,7 +23,7 @@ const structuredData = {
   headline: title,
   description,
   url: canonical,
-  ...(article ? { datePublished: article.publishedTime, author: { '@type': 'Person', name: article.author } } : {}),
+  ...(article ? { datePublished: article.publishedTime, author: { '@type': 'Person', name: article.author }, image: imageUrl } : {}),
 };
 ---
 
@@ -48,25 +48,42 @@ const structuredData = {
     <meta name="theme-color" content="#f7f7f4" />
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E✦%3C/text%3E%3C/svg%3E" />
     <title>{title}</title>
-    <script type="application/ld+json" set:html={JSON.stringify(structuredData).replace(/</g, '\\u003c')} />
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(structuredData).replace(/</g, '\\u003c')} />
+    <script is:inline>
+      (() => {
+        const storedTheme = localStorage.getItem('bruce-theme');
+        const systemTheme = window.matchMedia?.('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        const hour = new Date().getHours();
+        const timeTheme = hour >= 19 || hour < 7 ? 'dark' : 'light';
+        const theme = storedTheme === 'light' || storedTheme === 'dark' ? storedTheme : (window.matchMedia ? systemTheme : timeTheme);
+        document.documentElement.dataset.theme = theme;
+        document.querySelector('meta[name="theme-color"]')?.setAttribute('content', theme === 'dark' ? '#121212' : '#f7f7f4');
+      })();
+    </script>
   </head>
   <body>
+    <a class="skip-link" href="#main-content"><span class="zh-only">跳到主要内容</span><span class="en-only">Skip to content</span></a>
     <div class="scroll-progress" aria-hidden="true"><span data-scroll-progress></span></div>
     <slot />
-    <button class="to-top" type="button" data-to-top aria-label="Back to top">↑</button>
+    <button class="to-top" type="button" data-to-top aria-label="返回顶部">↑</button>
     <script is:inline>
       const key = 'bruce-language';
+      const themeKey = 'bruce-theme';
       const applyGiscusTheme = (theme) => {
         document.querySelectorAll('.giscus-frame').forEach((frame) => {
           frame.contentWindow?.postMessage({ giscus: { setConfig: { theme } } }, 'https://giscus.app');
         });
       };
-      const setThemeFromLocalTime = () => {
-        const hour = new Date().getHours();
-        const theme = hour >= 19 || hour < 7 ? 'dark' : 'light';
+      const resolveSystemTheme = () => window.matchMedia?.('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      const setTheme = (theme, persist = false) => {
         document.documentElement.dataset.theme = theme;
         document.querySelector('meta[name="theme-color"]')?.setAttribute('content', theme === 'dark' ? '#121212' : '#f7f7f4');
         applyGiscusTheme(theme === 'dark' ? 'dark' : 'light');
+        if (persist) localStorage.setItem(themeKey, theme);
+        document.querySelectorAll('[data-theme-label]').forEach((node) => { node.textContent = theme === 'dark' ? '☾' : '☀'; });
+        document.querySelectorAll('[data-theme-toggle]').forEach((button) => {
+          button.setAttribute('aria-label', theme === 'dark' ? '切换为浅色模式 / Switch to light theme' : '切换为深色模式 / Switch to dark theme');
+        });
       };
       const setCosmicMark = () => {
         const marks = [
@@ -86,11 +103,21 @@ const structuredData = {
         document.querySelectorAll('[data-language-label]').forEach((node) => {
           node.textContent = language === 'zh' ? 'EN' : '中';
         });
+        const toTopLabel = language === 'zh' ? '返回顶部' : 'Back to top';
+        document.querySelectorAll('[data-to-top]').forEach((button) => button.setAttribute('aria-label', toTopLabel));
       };
       setLanguage(localStorage.getItem(key) || 'zh');
-      setThemeFromLocalTime();
+      setTheme(document.documentElement.dataset.theme || resolveSystemTheme());
       setCosmicMark();
-      window.setInterval(setThemeFromLocalTime, 60_000);
+      document.querySelectorAll('[data-theme-toggle]').forEach((button) => {
+        button.addEventListener('click', () => {
+          const nextTheme = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+          setTheme(nextTheme, true);
+        });
+      });
+      window.matchMedia?.('(prefers-color-scheme: dark)').addEventListener('change', () => {
+        if (!localStorage.getItem(themeKey)) setTheme(resolveSystemTheme());
+      });
       const giscusObserver = new MutationObserver(() => {
         if (document.querySelector('.giscus-frame')) {
           applyGiscusTheme(document.documentElement.dataset.theme === 'dark' ? 'dark' : 'light');
@@ -105,6 +132,7 @@ const structuredData = {
       });
       const progress = document.querySelector('[data-scroll-progress]');
       const toTop = document.querySelector('[data-to-top]');
+      document.querySelector('main')?.setAttribute('id', 'main-content');
       const updateScrollUI = () => {
         const max = document.documentElement.scrollHeight - window.innerHeight;
         const ratio = max > 0 ? window.scrollY / max : 0;

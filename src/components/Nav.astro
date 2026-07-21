@@ -17,6 +17,7 @@ const randomPosts = (await getCollection('posts', ({ data }) => !data.draft)).ma
       <a class:list={[{ active: active === 'about' }]} href={`${base}about/`}><span class="zh-only">关于</span><span class="en-only">About</span></a>
     </div>
     <button class="random-note" type="button" data-random-posts={JSON.stringify(randomPosts)} aria-label="Open a random note" title="Random note">✦</button>
+    <button class="theme-toggle" type="button" data-theme-toggle aria-label="Toggle color theme"><span data-theme-label>◐</span></button>
     <button class="language-toggle" type="button" data-language-toggle aria-label="Switch language"><span data-language-label>EN</span></button>
   </nav>
 </header>

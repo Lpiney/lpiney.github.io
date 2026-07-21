@@ -1,0 +1,16 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Nav from '../components/Nav.astro';
+const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
+---
+
+<BaseLayout title="404 · Bruce Log" description="This signal could not be found.">
+  <Nav />
+  <main class="container page-main not-found-page" id="main-content">
+    <p class="eyebrow">SIGNAL LOST / 404</p>
+    <div class="not-found-orbit" aria-hidden="true"><span>✦</span><i></i><b></b></div>
+    <h1 class="page-title"><span class="zh-only">这里没有<strong>信号</strong></span><span class="en-only">This signal is <strong>lost</strong></span></h1>
+    <p class="page-lede"><span class="zh-only">它可能已经迁移到另一条轨道，或者从未被记录。回到首页，重新开始探索。</span><span class="en-only">It may have moved to another orbit—or never been recorded. Return home and begin again.</span></p>
+    <a class="not-found-link" href={base}><span class="zh-only">返回任务控制中心</span><span class="en-only">Return to mission control</span> ↗</a>
+  </main>
+</BaseLayout>

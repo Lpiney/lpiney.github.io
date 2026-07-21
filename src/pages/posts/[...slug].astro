@@ -13,7 +13,7 @@ const { post } = Astro.props;
 const { Content, headings } = await render(post);
 const date = post.data.date.toLocaleDateString('zh-CN', { year: 'numeric', month: 'long', day: 'numeric' });
 const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
-const readingMinutes = Math.max(1, Math.ceil(post.body.replace(/\s/g, '').length / 550));
+const readingMinutes = Math.max(1, Math.ceil((post.body ?? '').replace(/\s/g, '').length / 550));
 const relatedPosts = (await getCollection('posts', ({ data }) => !data.draft && data.title !== post.data.title))
   .map((candidate) => ({ post: candidate, matches: candidate.data.tags.filter((tag) => post.data.tags.includes(tag)).length }))
   .filter(({ matches }) => matches > 0)

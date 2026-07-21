@@ -4,7 +4,7 @@ import { tagSlug } from '../utils/tags';
 const { post, index = 0 } = Astro.props as { post: CollectionEntry<'posts'>; index?: number };
 const date = post.data.date.toLocaleDateString('zh-CN', { year: 'numeric', month: 'short', day: 'numeric' });
 const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
-const readingMinutes = Math.max(1, Math.ceil(post.body.replace(/\s/g, '').length / 550));
+const readingMinutes = Math.max(1, Math.ceil((post.body ?? '').replace(/\s/g, '').length / 550));
 ---
 
 <article class="post-card" style={`--delay: ${index * 70}ms`}>
