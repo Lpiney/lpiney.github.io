@@ -1,4 +1,4 @@
-Hi, I’m Bruce. I’m an EE undergraduate and I love robots and indie games.
+Hi, I’m Bruce. I’m a CityU ME student starting in Fall 2026, and I love robots and indie games.
 
 ## Public projects
 
