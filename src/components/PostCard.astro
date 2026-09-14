@@ -15,6 +15,5 @@ const readingMinutes = Math.max(1, Math.ceil((post.body ?? '').replace(/\s/g, ''
     {post.data.subtitle && <p>{post.data.subtitle}</p>}
     <div class="post-card-footer"><div class="tag-row">{post.data.tags.map((tag) => <a href={`${base}tags/${tagSlug(tag)}/`}>{tag}</a>)}</div><span class="read-label"><span class="zh-only">阅读记录</span><span class="en-only">Open note</span></span></div>
   </div>
-  <div class="post-cover" aria-hidden="true"><img src={`${base}og/${post.id}.svg`} alt="" loading="lazy" /></div>
   <a class="post-arrow" href={`${base}posts/${post.id}/`} aria-label={`Read ${post.data.title}`}>↗</a>
 </article>

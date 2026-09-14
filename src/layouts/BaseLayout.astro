@@ -28,7 +28,7 @@ const structuredData = {
 ---
 
 <!doctype html>
-<html lang="zh-CN" data-lang="zh" data-theme="light">
+<html lang="zh-CN" data-lang="zh">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -49,17 +49,6 @@ const structuredData = {
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E✦%3C/text%3E%3C/svg%3E" />
     <title>{title}</title>
     <script is:inline type="application/ld+json" set:html={JSON.stringify(structuredData).replace(/</g, '\\u003c')} />
-    <script is:inline>
-      (() => {
-        const storedTheme = localStorage.getItem('bruce-theme');
-        const systemTheme = window.matchMedia?.('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-        const hour = new Date().getHours();
-        const timeTheme = hour >= 19 || hour < 7 ? 'dark' : 'light';
-        const theme = storedTheme === 'light' || storedTheme === 'dark' ? storedTheme : (window.matchMedia ? systemTheme : timeTheme);
-        document.documentElement.dataset.theme = theme;
-        document.querySelector('meta[name="theme-color"]')?.setAttribute('content', theme === 'dark' ? '#121212' : '#f7f7f4');
-      })();
-    </script>
   </head>
   <body>
     <a class="skip-link" href="#main-content"><span class="zh-only">跳到主要内容</span><span class="en-only">Skip to content</span></a>
@@ -68,23 +57,6 @@ const structuredData = {
     <button class="to-top" type="button" data-to-top aria-label="返回顶部">↑</button>
     <script is:inline>
       const key = 'bruce-language';
-      const themeKey = 'bruce-theme';
-      const applyGiscusTheme = (theme) => {
-        document.querySelectorAll('.giscus-frame').forEach((frame) => {
-          frame.contentWindow?.postMessage({ giscus: { setConfig: { theme } } }, 'https://giscus.app');
-        });
-      };
-      const resolveSystemTheme = () => window.matchMedia?.('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-      const setTheme = (theme, persist = false) => {
-        document.documentElement.dataset.theme = theme;
-        document.querySelector('meta[name="theme-color"]')?.setAttribute('content', theme === 'dark' ? '#121212' : '#f7f7f4');
-        applyGiscusTheme(theme === 'dark' ? 'dark' : 'light');
-        if (persist) localStorage.setItem(themeKey, theme);
-        document.querySelectorAll('[data-theme-label]').forEach((node) => { node.textContent = theme === 'dark' ? '☾' : '☀'; });
-        document.querySelectorAll('[data-theme-toggle]').forEach((button) => {
-          button.setAttribute('aria-label', theme === 'dark' ? '切换为浅色模式 / Switch to light theme' : '切换为深色模式 / Switch to dark theme');
-        });
-      };
       const setCosmicMark = () => {
         const marks = [
           { icon: '∞', label: 'INFINITY' },
@@ -107,24 +79,7 @@ const structuredData = {
         document.querySelectorAll('[data-to-top]').forEach((button) => button.setAttribute('aria-label', toTopLabel));
       };
       setLanguage(localStorage.getItem(key) || 'zh');
-      setTheme(document.documentElement.dataset.theme || resolveSystemTheme());
       setCosmicMark();
-      document.querySelectorAll('[data-theme-toggle]').forEach((button) => {
-        button.addEventListener('click', () => {
-          const nextTheme = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
-          setTheme(nextTheme, true);
-        });
-      });
-      window.matchMedia?.('(prefers-color-scheme: dark)').addEventListener('change', () => {
-        if (!localStorage.getItem(themeKey)) setTheme(resolveSystemTheme());
-      });
-      const giscusObserver = new MutationObserver(() => {
-        if (document.querySelector('.giscus-frame')) {
-          applyGiscusTheme(document.documentElement.dataset.theme === 'dark' ? 'dark' : 'light');
-          giscusObserver.disconnect();
-        }
-      });
-      giscusObserver.observe(document.body, { childList: true, subtree: true });
       document.querySelectorAll('[data-language-toggle]').forEach((button) => {
         button.addEventListener('click', () => {
           setLanguage(document.documentElement.dataset.lang === 'zh' ? 'en' : 'zh');

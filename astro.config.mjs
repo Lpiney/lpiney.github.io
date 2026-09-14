@@ -1,7 +1,6 @@
 import { defineConfig } from 'astro/config';
 import mdx from '@astrojs/mdx';
 import sitemap from '@astrojs/sitemap';
-import tailwindcss from '@tailwindcss/vite';
 
 const repository = process.env.GITHUB_REPOSITORY?.split('/')[1] ?? 'Bruce.github.io';
 const owner = process.env.GITHUB_REPOSITORY_OWNER;
@@ -13,5 +12,4 @@ export default defineConfig({
   base,
   output: 'static',
   integrations: [mdx(), sitemap()],
-  vite: { plugins: [tailwindcss()] },
 });
