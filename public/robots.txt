@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://lpiney.github.io/sitemap-index.xml

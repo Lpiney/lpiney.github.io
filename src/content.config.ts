@@ -7,7 +7,7 @@ const posts = defineCollection({
     title: z.string(),
     subtitle: z.string().optional(),
     date: z.coerce.date(),
-    author: z.string().default('Bruce Li'),
+    author: z.string().default('Bruce'),
     tags: z.array(z.string()).default([]),
     draft: z.boolean().optional(),
   }),

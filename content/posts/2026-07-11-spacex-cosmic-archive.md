@@ -2,7 +2,7 @@
 title: "SpaceX：把火箭从一次性产品变成可迭代系统"
 subtitle: "从 Falcon 9 的回收，到 Starship 的不确定性：一家公司如何重写发射服务的成本、节奏与想象力"
 date: 2026-07-11 20:00:00
-author: "Bruce Li"
+author: "Bruce"
 tags:
   - Space
   - SpaceX

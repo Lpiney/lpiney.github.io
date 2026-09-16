@@ -3,7 +3,7 @@ layout:     post
 title:      "Why I Like Murder Drones?"
 subtitle:   "One of the best anime I've enjoyed in 2025"
 date:       2026-01-02 16:00:00
-author:     "Bruce Li"
+author:     "Bruce"
 header-img: "img/post-bg-murder-drones.jpg"
 catalog: true
 tags:

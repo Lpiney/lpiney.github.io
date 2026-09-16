@@ -3,3 +3,6 @@ dist/
 .astro/
 .env
 .DS_Store
+
+# Local dev-container / agent environment configuration; keep it out of the repository.
+.devcontainer/

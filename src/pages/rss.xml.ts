@@ -3,7 +3,7 @@ import { getCollection } from 'astro:content';
 const escapeXml = (value: string) => value.replace(/[<>&'\"]/g, (character) => ({ '<': '&lt;', '>': '&gt;', '&': '&amp;', "'": '&apos;', '"': '&quot;' }[character] || character));
 
 export async function GET({ site }: { site: URL | undefined }) {
-  const origin = site?.origin ?? 'https://lpiney.github.io';
+  const origin = site?.origin ?? '';
   const posts = (await getCollection('posts', ({ data }) => !data.draft)).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
   const items = posts.map((post) => {
     const link = `${origin}/posts/${post.id}/`;

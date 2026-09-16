@@ -1,4 +1,4 @@
-你好，我是 Bruce，CityU 2026 Fall 的 ME 学生，喜欢机器人和独立游戏。
+你好，我是 Bruce，机械工程专业的学生，喜欢机器人和独立游戏。
 
 ## 公开项目
 
@@ -8,6 +8,6 @@
 
 你可以在这些地方找到我：
 
-- 邮箱：<a href="mailto:aletymode@gmail.com">aletymode@gmail.com</a>
 - GitHub：<a href="https://github.com/Lpiney" target="_blank" rel="noopener">https://github.com/Lpiney</a>
-- B 站：<a href="https://space.bilibili.com/520375984" target="_blank" rel="noopener">https://space.bilibili.com/520375984</a>
+
+<!-- 可选：如需公开联系方式，在此补充邮箱、社交主页等，之前用于演示的私人邮箱与账号已移除。 -->

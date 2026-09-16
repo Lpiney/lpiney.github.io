@@ -1,4 +1,4 @@
-Hi, I’m Bruce. I’m a CityU ME student starting in Fall 2026, and I love robots and indie games.
+Hi, I’m Bruce. I’m an engineering student, and I love robots and indie games.
 
 ## Public projects
 
@@ -8,6 +8,6 @@ Hi, I’m Bruce. I’m a CityU ME student starting in Fall 2026, and I love robo
 
 Find me here:
 
-- Email: <a href="mailto:aletymode@gmail.com">aletymode@gmail.com</a>
 - GitHub: <a href="https://github.com/Lpiney" target="_blank" rel="noopener">https://github.com/Lpiney</a>
-- Bilibili: <a href="https://space.bilibili.com/520375984" target="_blank" rel="noopener">https://space.bilibili.com/520375984</a>
+
+<!-- Optional: add public contact details (email, social profiles) here. The previous personal email and account link were removed. -->
