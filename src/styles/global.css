@@ -1,3 +1,16 @@
+/*
+ * Interface typeface: MiSans (Xiaomi, https://hyperos.mi.com/font/).
+ * Free for commercial use; this copy is subset to the characters the interface uses.
+ * Regenerate with: npm run build:ui-font
+ */
+@font-face {
+  font-family: "MiSans Subset";
+  src: url("../assets/fonts/misans-ui-subset.woff2") format("woff2");
+  font-weight: 400 700;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root {
   --ink: #20201e;
   --muted: #696965;
@@ -6,7 +19,7 @@
   --soft: #f6e5e1;
   --paper: #f7f7f4;
   --serif: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", "Songti SC", "STSong", Georgia, "SimSun", serif;
-  --sans: "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", Arial, sans-serif;
+  --sans: "MiSans", "MiSans Subset", "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", Arial, sans-serif;
   --mono: "SFMono-Regular", Consolas, monospace;
 }
 

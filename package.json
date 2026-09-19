@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build && node scripts/generate-og-png.mjs",
+    "build:ui-font": "node scripts/build-ui-font-subset.mjs",
     "preview": "astro preview"
   },
   "dependencies": {

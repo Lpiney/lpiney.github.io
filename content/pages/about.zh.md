@@ -10,4 +10,6 @@
 
 - GitHub：<a href="https://github.com/Lpiney" target="_blank" rel="noopener">https://github.com/Lpiney</a>
 
+界面字体使用 [MiSans](https://hyperos.mi.com/font/zh/details/sc/)；正文字体为系统衬线字体。
+
 <!-- 可选：如需公开联系方式，在此补充邮箱、社交主页等，之前用于演示的私人邮箱与账号已移除。 -->

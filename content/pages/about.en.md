@@ -10,4 +10,6 @@ Find me here:
 
 - GitHub: <a href="https://github.com/Lpiney" target="_blank" rel="noopener">https://github.com/Lpiney</a>
 
+The interface uses [MiSans](https://hyperos.mi.com/font/zh/details/sc/) by Xiaomi; body copy stays on the system serif stack.
+
 <!-- Optional: add public contact details (email, social profiles) here. The previous personal email and account link were removed. -->
