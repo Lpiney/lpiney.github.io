@@ -72,6 +72,21 @@ npm run build:ui-font
 
 脚本会从 `src/`、`content/projects/`、文章 frontmatter 收集字符，再把 MiSans VF 子集化到字重 400–700。子集之外的字符会回落到系统字体，如果将来某个标签显示异常，重跑一次即可。
 
+## 背景与配色
+
+全站是深色星空主题，配色集中在 `src/styles/global.css` 的 `:root`：`--paper` 页面底、`--ink` 主文字、`--muted` 次级文字、`--line` 分隔线、`--accent` 强调色，以及 `--surface` / `--surface-strong` / `--surface-hover` 三个卡片面层。换主题只要改这几个变量，不要在规则里直接写死颜色。
+
+星空背景分两档自托管：
+
+| 文件 | 尺寸 | 用途 |
+| --- | --- | --- |
+| `public/assets/backgrounds/artemis-ii-starfield-1920.webp` | 1920×1280 | 默认背景 |
+| `public/assets/backgrounds/artemis-ii-starfield-1280.webp` | 1280×853 | ≤780px 的窄屏 |
+
+由 `body::after` 固定铺满（`z-index: -2`），上面叠一层 `rgba(6, 6, 10, …)` 渐变保证文字对比度；`body::before` 是网格纹理。换图时保持同样的命名与两档尺寸即可。
+
+照片来源为 NASA 图像库 `art002e012588`（Artemis II 乘组拍摄，2026-04-07），NASA 图像可自由使用，关于页保留了署名。替换背景图时请一并更新那行署名。
+
 ## 部署
 
 推送到 `master` 会触发 `.github/workflows/deploy.yml`：先 `astro check` 与 `astro build`，再把 `dist/` 发布到 GitHub Pages。仓库设置里把 **Pages → Build and deployment → Source** 设为 **GitHub Actions**。

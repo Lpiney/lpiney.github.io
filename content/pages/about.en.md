@@ -12,4 +12,6 @@ Find me here:
 
 The interface uses [MiSans](https://hyperos.mi.com/font/zh/details/sc/) by Xiaomi; body copy stays on the system serif stack.
 
+Background photo courtesy of [NASA](https://images.nasa.gov/) (Artemis II crew, ID art002e012588).
+
 <!-- Optional: add public contact details (email, social profiles) here. The previous personal email and account link were removed. -->
