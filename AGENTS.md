@@ -5,7 +5,7 @@
 Bruce Log is an Astro 7 static blog deployed to GitHub Pages. Site source lives in `src/`; long-form content is Markdown in `content/`; static public files belong in `public/`.
 
 - `src/pages/`: route entry points, including posts, archive, start, lab, and stats pages.
-- `src/components/`: reusable Astro components such as navigation, cards, comments, and Steam profile.
+- `src/components/`: reusable Astro components such as navigation, cards, and comments.
 - `src/layouts/`: shared document layout and metadata.
 - `src/styles/global.css`: global visual system and responsive styles.
 - `src/content.config.ts`: zod schemas for posts, pages, and projects.
