@@ -27,7 +27,9 @@
 }
 
 * { box-sizing: border-box; }
-html { scroll-behavior: smooth; background: var(--paper); }
+/* html 保持透明，让 body 的背景向上传递到画布最底层；
+   否则 html 的不透明背景会使 body 背景留在 body 盒上，盖住 body::before/::after（星空与网格）。 */
+html { scroll-behavior: smooth; }
 body { min-width: 320px; margin: 0; color: var(--ink); background: radial-gradient(circle at 92% 4%, rgba(96, 82, 168, .3), transparent 26rem), var(--paper); font-family: var(--sans); }
 body::before { content: ""; position: fixed; z-index: -1; inset: 0; opacity: .18; background-image: linear-gradient(rgba(255, 255, 255, .05) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, .05) 1px, transparent 1px); background-size: 88px 88px; mask-image: linear-gradient(to bottom, black, transparent 62%); pointer-events: none; }
 body::after { content: ""; position: fixed; z-index: -2; inset: 0; background: linear-gradient(rgba(6, 6, 10, .5), rgba(6, 6, 10, .78)), url("/assets/backgrounds/artemis-ii-starfield-1920.webp") center / cover no-repeat; }
