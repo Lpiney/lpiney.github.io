@@ -37,7 +37,6 @@ const englishToc = tocHeadings.filter((heading) => !/[\u3400-\u9fff]/.test(headi
       {post.data.subtitle && <p class="article-subtitle">{post.data.subtitle}</p>}
       <div class="tag-row">{post.data.tags.map((tag) => <span>{tag}</span>)}</div>
     </header>
-    <div class="article-cover" aria-hidden="true"><span>✦</span></div>
     <div class="article-reading">
       {(chineseToc.length > 0 || englishToc.length > 0) && <details class="article-toc" open>
         <summary><span class="zh-only">本页目录</span><span class="en-only">On this page</span></summary>

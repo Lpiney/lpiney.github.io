@@ -57,17 +57,6 @@ const structuredData = {
     <button class="to-top" type="button" data-to-top aria-label="返回顶部">↑</button>
     <script is:inline>
       const key = 'bruce-language';
-      const setCosmicMark = () => {
-        const marks = [
-          { icon: '∞', label: 'INFINITY' },
-          { icon: '♊', label: 'GEMINI' },
-          { icon: '✦', label: 'ORION' },
-          { icon: '✧', label: 'ANDROMEDA' },
-        ];
-        const mark = marks[new Date().getDate() % marks.length];
-        document.querySelectorAll('[data-cosmic-icon]').forEach((node) => { node.textContent = mark.icon; });
-        document.querySelectorAll('[data-cosmic-label]').forEach((node) => { node.textContent = mark.label; });
-      };
       const setLanguage = (language) => {
         document.documentElement.dataset.lang = language;
         document.documentElement.lang = language === 'zh' ? 'zh-CN' : 'en';
@@ -79,7 +68,6 @@ const structuredData = {
         document.querySelectorAll('[data-to-top]').forEach((button) => button.setAttribute('aria-label', toTopLabel));
       };
       setLanguage(localStorage.getItem(key) || 'zh');
-      setCosmicMark();
       document.querySelectorAll('[data-language-toggle]').forEach((button) => {
         button.addEventListener('click', () => {
           setLanguage(document.documentElement.dataset.lang === 'zh' ? 'en' : 'zh');
