@@ -63,7 +63,9 @@ html[data-lang="en"] .en-only { display: inline; }
 .text-link, .home-start-link, .column-notes a, .not-found-link { font-weight: 600; white-space: nowrap; }
 .text-link:hover, .home-start-link:hover, .column-notes a:hover, .not-found-link:hover { color: var(--accent); }
 .hero-actions { display: flex; gap: 20px; }
-.hero-visual { position: relative; min-height: 440px; overflow: hidden; border-radius: 22px; background: radial-gradient(circle at 48% 46%, rgba(132, 115, 255, .38), transparent 24%), radial-gradient(circle at 80% 15%, rgba(182, 250, 255, .2), transparent 30%), #28262c; box-shadow: 0 18px 45px rgba(0, 0, 0, .1); }
+/* 宇宙卡片的缓慢浮动；原版旋转 7° 是为旧版圆形构图调的，矩形卡片上调小到 2°。 */
+@keyframes card-float { 50% { transform: translateY(14px) rotate(2deg); } }
+.hero-visual { position: relative; min-height: 440px; overflow: hidden; border-radius: 22px; background: radial-gradient(circle at 48% 46%, rgba(132, 115, 255, .38), transparent 24%), radial-gradient(circle at 80% 15%, rgba(182, 250, 255, .2), transparent 30%), #28262c; box-shadow: 0 18px 45px rgba(0, 0, 0, .1); animation: card-float 9s ease-in-out infinite; }
 .hero-visual::before { content: "COSMIC ARCHIVE"; position: absolute; z-index: 3; top: 18px; left: 20px; color: rgba(255, 255, 255, .6); font: .6rem var(--mono); letter-spacing: .12em; }
 .orbit { position: absolute; inset: 11%; border: 1px solid rgba(255, 255, 255, .4); border-radius: 50%; }
 .orbit-a { transform: rotate(26deg); }
@@ -86,7 +88,8 @@ html[data-lang="en"] .en-only { display: inline; }
 .section-title a { color: var(--ink); }
 .section-title a:hover { color: var(--accent); }
 .post-list { display: grid; gap: 12px; margin-top: 24px; }
-.post-card { display: grid; grid-template-columns: 46px minmax(0, 1fr) auto; gap: 20px; min-height: 160px; padding: 24px; border: 1px solid var(--line); border-radius: 16px; background: rgba(255, 255, 255, .58); transition: .2s; }
+@keyframes appear { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+.post-card { display: grid; grid-template-columns: 46px minmax(0, 1fr) auto; gap: 20px; min-height: 160px; padding: 24px; border: 1px solid var(--line); border-radius: 16px; background: rgba(255, 255, 255, .58); transition: .2s; animation: appear .45s both; animation-delay: var(--delay); }
 .post-card:hover, .featured-reading-card:hover, .lab-card:hover { border-color: #bbb9b4; background: #fff; box-shadow: 0 10px 30px rgba(0, 0, 0, .06); }
 .post-number { padding-top: 4px; font: .7rem var(--mono); }
 .post-card h2 { margin: 9px 0 7px; font: 600 clamp(1.32rem, 2vw, 1.75rem)/1.12 var(--serif); letter-spacing: -.035em; }
@@ -153,6 +156,7 @@ html[data-lang="en"] .en-only { display: inline; }
 
 .lab-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin-top: 60px; }
 .lab-card, .terminal-panel { padding: 27px; border: 1px solid var(--line); border-top: 2px solid var(--ink); border-radius: 16px; background: rgba(255, 255, 255, .6); }
+.lab-card { animation: appear .45s both; animation-delay: var(--delay); }
 .lab-card { display: flex; flex-direction: column; min-height: 270px; }
 .lab-card-top, .lab-card footer { display: flex; justify-content: space-between; gap: 12px; color: var(--muted); font: .65rem var(--mono); }
 .lab-card h2 { margin: 34px 0 13px; font: 600 1.7rem var(--serif); }
