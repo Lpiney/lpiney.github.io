@@ -4,6 +4,7 @@ subtitle: "One of the most common issues in your daily chatting experience with 
 date: 2026-05-30 12:00:00
 author: "Bruce"
 featured: true
+draft: true
 tags:
   - Technology
   - Diary

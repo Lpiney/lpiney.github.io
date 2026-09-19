@@ -31,8 +31,11 @@ const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL :
       </a>
     </div>
     <button class="language-toggle" type="button" data-language-toggle aria-label="Switch language">
-      <span class="zh-only">EN</span>
-      <span class="en-only">中</span>
+      <span data-lang-mark="zh">中</span>
+      <span class="lang-sep" aria-hidden="true">
+        /
+      </span>
+      <span data-lang-mark="en">EN</span>
     </button>
   </nav>
 </header>

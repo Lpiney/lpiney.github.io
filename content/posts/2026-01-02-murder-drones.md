@@ -4,6 +4,7 @@ subtitle: "One of the best anime I've enjoyed in 2025"
 date: 2026-01-02 16:00:00
 author: "Bruce"
 featured: true
+draft: true
 tags:
   - Diary
   - Anime
