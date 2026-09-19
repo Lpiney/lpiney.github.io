@@ -11,7 +11,7 @@ tags:
   - Diary
 ---
 
-<div class="lang-en" markdown="1">
+<div class="lang-en">
 
 ## Introduction
 
@@ -19,7 +19,7 @@ Steam Punk is a retro-futuristic subculture that imagines a world where steam po
 
 </div>
 
-<div class="lang-zh" markdown="1">
+<div class="lang-zh">
 
 ## 引言
 

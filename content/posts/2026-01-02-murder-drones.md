@@ -13,7 +13,7 @@ tags:
   - Review
 ---
 
-<div class="lang-en" markdown="1">
+<div class="lang-en">
 
 ## Information 
 
@@ -50,7 +50,7 @@ MD has a lot of characters. They are all very interesting and have different rol
 
 </div>
 
-<div class="lang-zh" markdown="1">
+<div class="lang-zh">
 
 ## 基本信息
 

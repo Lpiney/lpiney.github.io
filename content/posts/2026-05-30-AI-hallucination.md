@@ -13,7 +13,7 @@ tags:
   - Hallucination
 ---
 
-<div class="lang-en" markdown="1">
+<div class="lang-en">
 
 ## Introduction
 
@@ -56,7 +56,7 @@ As AI technology continues to evolve, researchers are developing increasingly so
 
 </div>
 
-<div class="lang-zh" markdown="1">
+<div class="lang-zh">
 
 ## 引言
 

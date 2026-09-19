@@ -87,7 +87,6 @@ const structuredData = {
       });
       const progress = document.querySelector('[data-scroll-progress]');
       const toTop = document.querySelector('[data-to-top]');
-      document.querySelector('main')?.setAttribute('id', 'main-content');
       const updateScrollUI = () => {
         const max = document.documentElement.scrollHeight - window.innerHeight;
         const ratio = max > 0 ? window.scrollY / max : 0;

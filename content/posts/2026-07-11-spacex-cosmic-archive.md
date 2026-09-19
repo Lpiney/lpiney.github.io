@@ -10,7 +10,7 @@ tags:
   - Engineering
 ---
 
-<div class="lang-en" markdown="1">
+<div class="lang-en">
 
 ## Chinese long-form edition
 
@@ -18,7 +18,7 @@ This article is currently available in Chinese. It examines SpaceX as an enginee
 
 </div>
 
-<div class="lang-zh" markdown="1">
+<div class="lang-zh">
 
 ## 引言：SpaceX 真正改变的是什么？
 
