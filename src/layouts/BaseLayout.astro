@@ -32,6 +32,13 @@ const structuredData = {
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script is:inline>
+      try {
+        const language = localStorage.getItem('bruce-language') === 'en' ? 'en' : 'zh';
+        document.documentElement.dataset.lang = language;
+        document.documentElement.lang = language === 'zh' ? 'zh-CN' : 'en';
+      } catch {}
+    </script>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
     <meta property="og:type" content={article ? 'article' : 'website'} />
@@ -61,9 +68,6 @@ const structuredData = {
         document.documentElement.dataset.lang = language;
         document.documentElement.lang = language === 'zh' ? 'zh-CN' : 'en';
         localStorage.setItem(key, language);
-        document.querySelectorAll('[data-language-label]').forEach((node) => {
-          node.textContent = language === 'zh' ? 'EN' : '中';
-        });
         const toTopLabel = language === 'zh' ? '返回顶部' : 'Back to top';
         document.querySelectorAll('[data-to-top]').forEach((button) => button.setAttribute('aria-label', toTopLabel));
       };

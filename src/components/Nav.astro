@@ -13,6 +13,6 @@ const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL :
       <a class:list={[{ active: active === 'lab' }]} href={`${base}lab/`}><span class="zh-only">实验室</span><span class="en-only">Lab</span></a>
       <a class:list={[{ active: active === 'about' }]} href={`${base}about/`}><span class="zh-only">关于</span><span class="en-only">About</span></a>
     </div>
-    <button class="language-toggle" type="button" data-language-toggle aria-label="Switch language"><span data-language-label>EN</span></button>
+    <button class="language-toggle" type="button" data-language-toggle aria-label="Switch language"><span class="zh-only">EN</span><span class="en-only">中</span></button>
   </nav>
 </header>
