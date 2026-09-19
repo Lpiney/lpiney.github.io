@@ -4,7 +4,9 @@
 
 - [Invoice Automation Runner](https://github.com/Lpiney/Invoice-Automation-Runner)：结合 Dify、DeepSeek、FastAPI 与 Playwright 的半自动发票信息提取和网页填表工具，保留人工审核与运行记录。
 - [Chinese Chess Agent](https://github.com/Lpiney/chinese-chess-agent)：将 Pikafish 局面分析与 LLM 对话结合的本地中国象棋教学 Demo。
-- [Bilibili Bangumi Tool](https://github.com/Lpiney/Bilibili-Bangumi-Tool)：用于获取、去重和整理 B 站追番信息的小工具。
+- [Train Cat](https://github.com/Lpiney/train-cat)：用 YOLO 训练单类猫咪检测模型的可复现模板，本地校验与推理、Kaggle T4 正式训练分离。
+
+完整项目列表见[实验室](/lab/)。
 
 你可以在这些地方找到我：
 

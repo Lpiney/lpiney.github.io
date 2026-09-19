@@ -4,7 +4,9 @@ Hi, I’m Bruce. I’m an engineering student, and I love robots and indie games
 
 - [Invoice Automation Runner](https://github.com/Lpiney/Invoice-Automation-Runner): a semi-automated invoice extraction and web-form filling tool built with Dify, DeepSeek, FastAPI, and Playwright, with human review and run-level records.
 - [Chinese Chess Agent](https://github.com/Lpiney/chinese-chess-agent): a local Chinese-chess teaching demo that combines Pikafish position analysis with LLM conversation.
-- [Bilibili Bangumi Tool](https://github.com/Lpiney/Bilibili-Bangumi-Tool): a small tool for fetching, deduplicating, and organizing a Bilibili anime watchlist.
+- [Train Cat](https://github.com/Lpiney/train-cat): a reproducible template for training a single-class cat detector with YOLO, keeping local checks and inference separate from Kaggle T4 training.
+
+The full list lives in the [Lab](/lab/).
 
 Find me here:
 
