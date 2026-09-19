@@ -1,42 +1,27 @@
 # Bruce Log
 
-A bilingual, static personal blog built with Astro.
+记录机器人、独立游戏，以及那些值得反复思考的技术。中英双语，持续更新。
 
-## Content
+## 写什么
 
-- Add posts in `content/posts/` as Markdown files with front matter.
-- Edit bilingual profile text in `content/pages/about.zh.md` and `content/pages/about.en.md`.
-- Post bodies can include `.lang-zh` and `.lang-en` blocks; the navigation toggle selects the visible language.
+三条长期轨道：
 
-## Local development
+- **宇宙档案** — 航天、工程系统，以及人类如何把边界变成可解的问题
+- **AI / 思考实验** — 模型能力、幻觉，以及人和工具更诚实的协作方式
+- **次元档案** — 动画、漫画、小说与游戏留下的记录
+
+## 怎么搭的
+
+- Astro 静态站点，GitHub Actions 构建后发布到 GitHub Pages
+- 评论区基于 GitHub Discussions（Giscus）
+- 界面字体 MiSans（小米）子集化后自托管；正文使用系统衬线字体
+
+## 本地运行
 
 ```sh
-npm install
-npm run dev
-npm run build
+npm install    # 安装依赖
+npm run dev    # 启动本地预览
+npm run build  # 生产构建
 ```
 
-## Comments
-
-Giscus powers the comment sections. Identifiers are never hardcoded; copy `.env.example` to `.env` (gitignored) and fill in:
-
-| Variable | Purpose |
-| --- | --- |
-| `PUBLIC_GISCUS_REPO` | Repository in `owner/name` form |
-| `PUBLIC_GISCUS_REPO_ID` | Repository node ID from [giscus.app](https://giscus.app) |
-| `PUBLIC_GISCUS_CATEGORY` | Discussion category name (defaults to `Announcements`) |
-| `PUBLIC_GISCUS_CATEGORY_ID` | Discussion category node ID from [giscus.app](https://giscus.app) |
-
-The comment section is intentionally hidden until `PUBLIC_GISCUS_REPO`, `PUBLIC_GISCUS_REPO_ID`, and `PUBLIC_GISCUS_CATEGORY_ID` are all set.
-
-For deployments, add the same four names as **repository variables** under *Settings → Secrets and variables → Actions → Variables*; the deploy workflow passes them to the build. Without them, the deployed site simply renders no comment section.
-
-## Configuration
-
-- `SITE_URL` optionally overrides the canonical origin used for canonical URLs, the sitemap, RSS, and `robots.txt`. On GitHub Actions it defaults to `https://<owner>.github.io`, and to `http://localhost:4321` locally, so no account name is hardcoded in the repository.
-- `robots.txt` is generated at build time from `SITE_URL`/the derived origin, so it stays in sync with the deployment target.
-- Content that identifies a person (contact address, social accounts, school, full name) should stay out of the repository; publish only the details you are comfortable sharing.
-
-## Deployment
-
-Pushing to `master` runs `.github/workflows/deploy.yml`, which builds and publishes the static output through GitHub Pages. In the repository settings, set **Pages → Build and deployment → Source** to **GitHub Actions**. A repository named `<owner>.github.io` is served from `https://<owner>.github.io/`; any other repository name is served from a `/<repository>/` subpath, which the build detects automatically.
+开发细节（目录结构、内容约定、评论与字体配置、部署）见 [docs/DEVELOPMENT.md](docs/DEVELOPMENT.md)。
