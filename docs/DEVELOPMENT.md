@@ -6,7 +6,7 @@
 
 | 路径 | 作用 |
 | --- | --- |
-| `src/pages/` | 路由入口：首页、文章、归档、终端、实验室、统计、start、标签、RSS |
+| `src/pages/` | 路由入口：首页、文章、归档、实验室、统计、start、标签、RSS、搜索索引与 OG 图 |
 | `src/components/` | 可复用组件：导航、卡片、评论、OG 图 |
 | `src/layouts/BaseLayout.astro` | 文档骨架与 canonical / OG / Twitter / JSON-LD 元信息 |
 | `src/styles/global.css` | 全站视觉系统与响应式样式 |
@@ -17,8 +17,11 @@
 
 ## 内容约定
 
-- 文章写在 `content/posts/`，frontmatter 由 `src/content.config.ts` 校验：`title`、可选 `subtitle`、`date`、`author`、`tags`
-- 双语正文用 `.lang-zh` / `.lang-en` 块，导航右上角的语言开关切换显示
+- 文章写在 `content/posts/`，frontmatter 由 `src/content.config.ts` 校验：`title`、可选 `subtitle`、`date`、`author`、`tags`、可选 `draft`、`featured`。schema 是 strict 的，多余字段会直接让构建失败
+- start 页的「先读这三篇」读取 `featured: true`，取最新三篇；不足三篇时构建报错（不静默降级）
+- 双语正文用 `.lang-zh` / `.lang-en` 块；显示与隐藏完全由 `src/styles/global.css` 的 `html[data-lang]` 规则控制，导航右上角的语言开关只负责切换 `data-lang` 并记入 localStorage（键名 `bruce-language`）。界面内联文案用 `.zh-only` / `.en-only`
+- 阅读时长与累计字数在 `src/utils/reading-time.ts` 按语言分别估算（中文按汉字数、英文按词数），用 `.zh-only/.en-only` 双 span 随语言切换
+- 标签页只为被至少 2 篇文章使用的标签生成（`src/utils/tags.ts` 的 `TAG_PAGE_MIN_POSTS`）；单篇标签在文章卡片与主题栏里渲染为不可点击的 chip，不会产生死链
 - 个人简介在 `content/pages/about.zh.md` 与 `content/pages/about.en.md`
 - 项目卡片在 `content/projects/`：`title`、`summaryZh`、`summaryEn`、`category`、`status`、`started`、可选 `link`
 - 不要提交 `dist/`、`node_modules/`、`.astro/`、`.cache/`、`.env` 或任何密钥
