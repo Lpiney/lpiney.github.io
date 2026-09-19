@@ -70,7 +70,7 @@ export async function getStaticPaths() {
     props: {
       title: post.data.title,
       subtitle: post.data.subtitle || '',
-      date: post.data.date.getFullYear(),
+      date: post.data.date.getUTCFullYear(),
     },
   }));
 }

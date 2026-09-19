@@ -15,7 +15,7 @@ const tagCounts = [
 ].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]));
 const yearCounts = [
   ...posts.reduce((counts, post) => {
-    const year = post.data.date.getFullYear();
+    const year = post.data.date.getUTCFullYear();
     counts.set(year, (counts.get(year) || 0) + 1);
     return counts;
   }, new Map<number, number>()),

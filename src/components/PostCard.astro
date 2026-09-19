@@ -4,7 +4,12 @@ import { tagSlug, getTagCounts, hasTagPage } from '../utils/tags';
 import { readingTime } from '../utils/reading-time';
 
 const { post, index = 0 } = Astro.props as { post: CollectionEntry<'posts'>; index?: number };
-const date = post.data.date.toLocaleDateString('zh-CN', { year: 'numeric', month: 'short', day: 'numeric' });
+const date = post.data.date.toLocaleDateString('zh-CN', {
+  year: 'numeric',
+  month: 'short',
+  day: 'numeric',
+  timeZone: 'UTC',
+});
 const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
 const { zhMinutes, enMinutes } = readingTime(post.body ?? '');
 const tagCounts = await getTagCounts();

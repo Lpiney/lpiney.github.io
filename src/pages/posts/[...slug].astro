@@ -12,7 +12,12 @@ export async function getStaticPaths() {
 
 const { post } = Astro.props;
 const { Content, headings } = await render(post);
-const date = post.data.date.toLocaleDateString('zh-CN', { year: 'numeric', month: 'long', day: 'numeric' });
+const date = post.data.date.toLocaleDateString('zh-CN', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+  timeZone: 'UTC',
+});
 const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
 const { zhMinutes, enMinutes } = readingTime(post.body ?? '');
 const canonical = new URL(Astro.url.pathname, Astro.site ?? Astro.url.origin).href;
@@ -77,7 +82,7 @@ const englishToc = tocHeadings.filter((heading) => !/[\u3400-\u9fff]/.test(headi
     </header>
     <div class="article-reading">
       {(chineseToc.length > 0 || englishToc.length > 0) && (
-        <details class="article-toc" open>
+        <details class="article-toc" data-article-toc open>
           <summary>
             <span class="zh-only">本页目录</span>
             <span class="en-only">On this page</span>
@@ -98,6 +103,10 @@ const englishToc = tocHeadings.filter((heading) => !/[\u3400-\u9fff]/.test(headi
           </ol>
         </details>
       )}
+      <script is:inline>
+        const toc = document.querySelector('[data-article-toc]');
+        if (toc && !window.matchMedia('(min-width: 1321px)').matches) toc.removeAttribute('open');
+      </script>
       <article class="prose article-content">
         <Content />
       </article>
