@@ -10,7 +10,8 @@ const posts = defineCollection({
     author: z.string().default('Bruce'),
     tags: z.array(z.string()).default([]),
     draft: z.boolean().optional(),
-  }),
+    featured: z.boolean().default(false),
+  }).strict(),
 });
 
 const pages = defineCollection({

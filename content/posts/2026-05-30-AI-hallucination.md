@@ -1,11 +1,9 @@
 ---
-layout:     post
-title:      "What is AI hallucination?"
-subtitle:   "One of the most common issues in your daily chatting experience with AI"
-date:       2026-05-30 12:00:00
-author:     "Bruce"
-header-img: "img/post-bg-ai-hallucination.png"
-catalog: true
+title: "What is AI hallucination?"
+subtitle: "One of the most common issues in your daily chatting experience with AI"
+date: 2026-05-30 12:00:00
+author: "Bruce"
+featured: true
 tags:
   - Technology
   - Diary

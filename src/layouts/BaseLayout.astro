@@ -6,6 +6,7 @@ interface Props {
   description?: string;
   image?: string;
   article?: { publishedTime: string; author: string };
+  jsonLd?: Record<string, unknown>;
 }
 
 const {
@@ -13,18 +14,10 @@ const {
   description = 'Robotics, independent games, and curious technology.',
   image = '/og/default.png',
   article,
+  jsonLd,
 } = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site ?? Astro.url.origin).href;
 const imageUrl = new URL(image, Astro.site ?? Astro.url.origin).href;
-const structuredData = {
-  '@context': 'https://schema.org',
-  '@type': article ? 'BlogPosting' : 'WebSite',
-  name: title,
-  headline: title,
-  description,
-  url: canonical,
-  ...(article ? { datePublished: article.publishedTime, author: { '@type': 'Person', name: article.author }, image: imageUrl } : {}),
-};
 ---
 
 <!doctype html>
@@ -55,7 +48,7 @@ const structuredData = {
     <meta name="theme-color" content="#0a0a0f" />
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E✦%3C/text%3E%3C/svg%3E" />
     <title>{title}</title>
-    <script is:inline type="application/ld+json" set:html={JSON.stringify(structuredData).replace(/</g, '\\u003c')} />
+    {jsonLd && <script is:inline type="application/ld+json" set:html={JSON.stringify(jsonLd).replace(/</g, '\\u003c')} />}
   </head>
   <body>
     <a class="skip-link" href="#main-content"><span class="zh-only">跳到主要内容</span><span class="en-only">Skip to content</span></a>

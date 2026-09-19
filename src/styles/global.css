@@ -106,7 +106,7 @@ html[data-lang="en"] .lang-en { display: revert; }
 .post-card-footer { display: flex; justify-content: space-between; gap: 16px; }
 .post-arrow { align-self: center; font-size: 1.45rem; }
 .tag-row, .topic-tags { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 15px; }
-.tag-row span, .tag-row a, .topic-tags a { padding: 4px 9px; border: 1px solid var(--line); border-radius: 99px; color: var(--muted); background: var(--surface); font: .63rem var(--mono); }
+.tag-row span, .tag-row a, .topic-tags a, .topic-tags span { padding: 4px 9px; border: 1px solid var(--line); border-radius: 99px; color: var(--muted); background: var(--surface); font: .63rem var(--mono); }
 .tag-row a:hover, .topic-tags a:hover, .topic-tags a.active { border-color: var(--accent); color: var(--accent); }
 .read-label { margin-top: 17px; color: var(--muted); font: .61rem var(--mono); letter-spacing: .08em; text-transform: uppercase; white-space: nowrap; }
 

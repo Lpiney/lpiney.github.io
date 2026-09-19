@@ -1,11 +1,8 @@
 ---
-layout:     post
-title:      "What is Steam Punk?"
-subtitle:   "A glimpse into the world of gears, steam, and Victorian imagination"
-date:       2026-05-28 12:00:00
-author:     "Bruce"
-header-img: "img/post-bg-steam-punk.png"
-catalog: true
+title: "What is Steam Punk?"
+subtitle: "A glimpse into the world of gears, steam, and Victorian imagination"
+date: 2026-05-28 12:00:00
+author: "Bruce"
 tags:
   - Culture
   - Diary
