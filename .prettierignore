@@ -1,0 +1,14 @@
+node_modules/
+dist/
+.astro/
+.cache/
+.claude/
+.workbuddy/
+package-lock.json
+# Static assets and diagrams are not hand-formatted.
+public/
+# Handwritten prose; do not reflow the articles.
+content/
+# Deliberately compressed one-rule-per-line stylesheet.
+src/styles/global.css
+docs/REVIEW-2026-09-19.md

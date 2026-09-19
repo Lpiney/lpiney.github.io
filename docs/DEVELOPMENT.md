@@ -4,16 +4,16 @@
 
 ## 目录结构
 
-| 路径 | 作用 |
-| --- | --- |
-| `src/pages/` | 路由入口：首页、文章、归档、实验室、统计、start、标签、RSS、搜索索引与 OG 图 |
-| `src/components/` | 可复用组件：导航、卡片、评论、OG 图 |
-| `src/layouts/BaseLayout.astro` | 文档骨架与 canonical / OG / Twitter / JSON-LD 元信息 |
-| `src/styles/global.css` | 全站视觉系统与响应式样式 |
-| `content/posts/`、`content/pages/`、`content/projects/` | Markdown 内容集合 |
-| `src/data/` | 页面用到的小型结构化数据（精选阅读等） |
-| `scripts/` | 构建期脚本（生成 OG PNG、生成字体子集） |
-| `public/` | 静态文件（示意图等） |
+| 路径                                                    | 作用                                                                         |
+| ------------------------------------------------------- | ---------------------------------------------------------------------------- |
+| `src/pages/`                                            | 路由入口：首页、文章、归档、实验室、统计、start、标签、RSS、搜索索引与 OG 图 |
+| `src/components/`                                       | 可复用组件：导航、卡片、评论、OG 图                                          |
+| `src/layouts/BaseLayout.astro`                          | 文档骨架与 canonical / OG / Twitter / JSON-LD 元信息                         |
+| `src/styles/global.css`                                 | 全站视觉系统与响应式样式                                                     |
+| `content/posts/`、`content/pages/`、`content/projects/` | Markdown 内容集合                                                            |
+| `src/data/`                                             | 页面用到的小型结构化数据（精选阅读等）                                       |
+| `scripts/`                                              | 构建期脚本（生成 OG PNG、生成字体子集）                                      |
+| `public/`                                               | 静态文件（示意图等）                                                         |
 
 ## 内容约定
 
@@ -41,16 +41,16 @@ npm run preview # 预览 dist 产物
 
 标识符不写死在代码里，改为从环境变量读取。复制 `.env.example` 为 `.env`（已被 gitignore 忽略）后填写：
 
-| 变量 | 用途 |
-| --- | --- |
-| `PUBLIC_GISCUS_REPO` | `owner/name` 形式的仓库 |
-| `PUBLIC_GISCUS_REPO_ID` | 仓库 node ID，来自 [giscus.app](https://giscus.app) |
-| `PUBLIC_GISCUS_CATEGORY` | 讨论分类名，默认 `Announcements` |
+| 变量                        | 用途                                                |
+| --------------------------- | --------------------------------------------------- |
+| `PUBLIC_GISCUS_REPO`        | `owner/name` 形式的仓库                             |
+| `PUBLIC_GISCUS_REPO_ID`     | 仓库 node ID，来自 [giscus.app](https://giscus.app) |
+| `PUBLIC_GISCUS_CATEGORY`    | 讨论分类名，默认 `Announcements`                    |
 | `PUBLIC_GISCUS_CATEGORY_ID` | 分类 node ID，来自 [giscus.app](https://giscus.app) |
 
 `PUBLIC_GISCUS_REPO`、`PUBLIC_GISCUS_REPO_ID`、`PUBLIC_GISCUS_CATEGORY_ID` 三者缺一时，评论区块整体隐藏，不会渲染出坏掉的组件。
 
-部署时需要在 *Settings → Secrets and variables → Actions → Variables* 配置同名四项，workflow 会把它们传进构建；没配置的话线上就不显示评论区。
+部署时需要在 _Settings → Secrets and variables → Actions → Variables_ 配置同名四项，workflow 会把它们传进构建；没配置的话线上就不显示评论区。
 
 ## 站点配置
 
@@ -81,10 +81,10 @@ npm run build:ui-font
 
 星空背景分两档自托管：
 
-| 文件 | 尺寸 | 用途 |
-| --- | --- | --- |
-| `public/assets/backgrounds/artemis-ii-starfield-1920.webp` | 1920×1280 | 默认背景 |
-| `public/assets/backgrounds/artemis-ii-starfield-1280.webp` | 1280×853 | ≤780px 的窄屏 |
+| 文件                                                       | 尺寸      | 用途          |
+| ---------------------------------------------------------- | --------- | ------------- |
+| `public/assets/backgrounds/artemis-ii-starfield-1920.webp` | 1920×1280 | 默认背景      |
+| `public/assets/backgrounds/artemis-ii-starfield-1280.webp` | 1280×853  | ≤780px 的窄屏 |
 
 由 `body::after` 固定铺满（`z-index: -2`），上面叠一层 `rgba(6, 6, 10, …)` 渐变保证文字对比度；`body::before` 是网格纹理。换图时保持同样的命名与两档尺寸即可。
 

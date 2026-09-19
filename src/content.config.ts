@@ -3,15 +3,17 @@ import { glob } from 'astro/loaders';
 
 const posts = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './content/posts' }),
-  schema: z.object({
-    title: z.string(),
-    subtitle: z.string().optional(),
-    date: z.coerce.date(),
-    author: z.string().default('Bruce'),
-    tags: z.array(z.string()).default([]),
-    draft: z.boolean().optional(),
-    featured: z.boolean().default(false),
-  }).strict(),
+  schema: z
+    .object({
+      title: z.string(),
+      subtitle: z.string().optional(),
+      date: z.coerce.date(),
+      author: z.string().default('Bruce'),
+      tags: z.array(z.string()).default([]),
+      draft: z.boolean().optional(),
+      featured: z.boolean().default(false),
+    })
+    .strict(),
 });
 
 const pages = defineCollection({

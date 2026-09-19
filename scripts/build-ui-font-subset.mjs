@@ -26,10 +26,11 @@ const safetyCharacters = [
   ' .,:;!?()[]{}<>/\\|-_=+*&%$#@~^`\'"…—–·、。，；：！？（）【】《》「」『』“”‘’％＆＋－×÷←→↑↓✦✧∞♊◎',
 ].join('');
 
-const walk = (directory) => readdirSync(directory).flatMap((entry) => {
-  const path = join(directory, entry);
-  return statSync(path).isDirectory() ? walk(path) : [path];
-});
+const walk = (directory) =>
+  readdirSync(directory).flatMap((entry) => {
+    const path = join(directory, entry);
+    return statSync(path).isDirectory() ? walk(path) : [path];
+  });
 
 const collectCharacters = () => {
   const characters = new Set(safetyCharacters);
@@ -64,14 +65,20 @@ const charset = collectCharacters();
 writeFileSync(charsetFile, charset);
 console.log(`Interface charset: ${charset.length} characters`);
 
-execFileSync('fonttools', ['varLib.instancer', '-q', '-o', instanceTtf, sourceTtf, 'wght=400:700'], { stdio: 'inherit' });
-execFileSync('pyftsubset', [
-  instanceTtf,
-  `--text-file=${charsetFile}`,
-  '--flavor=woff2',
-  `--output-file=${outputFile}`,
-  "--layout-features=*",
-  '--no-hinting',
-], { stdio: 'inherit' });
+execFileSync('fonttools', ['varLib.instancer', '-q', '-o', instanceTtf, sourceTtf, 'wght=400:700'], {
+  stdio: 'inherit',
+});
+execFileSync(
+  'pyftsubset',
+  [
+    instanceTtf,
+    `--text-file=${charsetFile}`,
+    '--flavor=woff2',
+    `--output-file=${outputFile}`,
+    '--layout-features=*',
+    '--no-hinting',
+  ],
+  { stdio: 'inherit' },
+);
 
 console.log(`Wrote ${outputFile} (${(statSync(outputFile).size / 1024).toFixed(1)} KB)`);

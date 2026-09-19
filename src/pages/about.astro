@@ -9,15 +9,31 @@ if (!aboutZh || !aboutEn) throw new Error('Missing bilingual About content.');
 const { Content: AboutZh } = await render(aboutZh);
 const { Content: AboutEn } = await render(aboutEn);
 ---
+
 <BaseLayout title="About · Bruce Log">
   <Nav active="about" />
   <main class="container page-main about-page" id="main-content">
     <p class="eyebrow">03 / OPERATOR</p>
-    <h1 class="page-title"><span class="zh-only">关于<strong>我</strong></span><span class="en-only">About <strong>me</strong></span></h1>
+    <h1 class="page-title">
+      <span class="zh-only">
+        关于<strong>我</strong>
+      </span>
+      <span class="en-only">
+        About <strong>me</strong>
+      </span>
+    </h1>
     <div class="about-grid">
-      <div class="about-orbit" aria-hidden="true"><span>BRUCE</span><i></i><b>✦</b></div>
-      <div class="prose lang-zh"><AboutZh /></div>
-      <div class="prose lang-en"><AboutEn /></div>
+      <div class="about-orbit" aria-hidden="true">
+        <span>BRUCE</span>
+        <i></i>
+        <b>✦</b>
+      </div>
+      <div class="prose lang-zh">
+        <AboutZh />
+      </div>
+      <div class="prose lang-en">
+        <AboutEn />
+      </div>
     </div>
   </main>
 </BaseLayout>
